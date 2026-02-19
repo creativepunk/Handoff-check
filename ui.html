@@ -267,6 +267,48 @@
       color: white;
     }
 
+    .action-btn.focused {
+      border-color: white !important;
+      color: white !important;
+      box-shadow: 0 0 0 1px white inset;
+    }
+
+    .history-controls {
+      display: flex;
+      gap: 4px;
+      margin-left: 8px;
+    }
+
+    .history-btn {
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--secondary-text);
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    .history-btn:hover:not(:disabled) {
+      background: var(--border-color);
+      color: var(--text-color);
+    }
+
+    .history-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .unlinked-header-left {
+      display: flex;
+      align-items: center;
+    }
+
     .hidden {
       display: none !important;
     }
@@ -370,7 +412,13 @@
 
         <div class="unlinked-section">
           <div class="unlinked-header">
-            <span id="unlinked-title">Unlinked Layers</span>
+            <div class="unlinked-header-left">
+              <span id="unlinked-title">Unlinked Layers</span>
+              <div class="history-controls">
+                <button id="style-undo" class="history-btn" onclick="undoIgnore()" title="Undo" disabled>↩</button>
+                <button id="style-redo" class="history-btn" onclick="redoIgnore()" title="Redo" disabled>↪</button>
+              </div>
+            </div>
             <span id="unlinked-count-badge" style="color: var(--unlinked-text)">0 found</span>
           </div>
           <div id="unlinked-list" class="unlinked-list"></div>
@@ -403,7 +451,13 @@
 
         <div class="unlinked-section">
           <div class="unlinked-header">
-            <span>Unnamed Frames</span>
+            <div class="unlinked-header-left">
+              <span>Unnamed Frames</span>
+              <div class="history-controls">
+                <button id="naming-undo" class="history-btn" onclick="undoIgnore()" title="Undo" disabled>↩</button>
+                <button id="naming-redo" class="history-btn" onclick="redoIgnore()" title="Redo" disabled>↪</button>
+              </div>
+            </div>
             <span id="unnamed-count-badge" style="color: var(--unlinked-text)">0 found</span>
           </div>
           <div id="unnamed-list" class="unlinked-list"></div>
@@ -416,6 +470,32 @@
     let currentTab = 'styles';
     let currentSubTab = 'color';
     let ignoredIds = new Set();
+    let undoStack = [];
+    let redoStack = [];
+    let lastResultsNodes = [];
+
+    function updateHistoryButtons() {
+      const undoBtn = document.getElementById(currentTab + '-undo');
+      const redoBtn = document.getElementById(currentTab + '-redo');
+      if (undoBtn) undoBtn.disabled = undoStack.length === 0;
+      if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+    }
+
+    function renderList() {
+      const listId = currentTab === 'styles' ? 'unlinked-list' : 'unnamed-list';
+      const badgeId = currentTab === 'styles' ? 'unlinked-count-badge' : 'unnamed-count-badge';
+      const list = document.getElementById(listId);
+      list.innerHTML = '';
+
+      const visibleNodes = lastResultsNodes.filter(n => !ignoredIds.has(n.id));
+      document.getElementById(badgeId).innerText = visibleNodes.length + ' found';
+
+      visibleNodes.forEach(node => {
+        const el = createListItem(node);
+        if (el) list.appendChild(el);
+      });
+      updateHistoryButtons();
+    }
 
     function showError(msg) {
       const el = document.getElementById('error-message');
@@ -456,20 +536,43 @@
           <div class="node-name" title="${node.name}">${node.name || 'Unnamed Layer'}</div>
         </div>
         <div class="unlinked-actions">
-          <button class="action-btn primary" onclick="selectNode('${node.id}')">Select</button>
+          <button class="action-btn primary" onclick="selectNode('${node.id}', this)">Select</button>
           <button class="action-btn" onclick="ignoreNode('${node.id}', this)">Ignore</button>
         </div>
       `;
       return item;
     }
 
-    function selectNode(id) {
+    function selectNode(id, btn) {
+      // Remove focused state from all action buttons
+      document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('focused'));
+      // Add focused state to current button
+      if (btn) btn.classList.add('focused');
+
       parent.postMessage({ pluginMessage: { type: 'select-node', nodeId: id } }, '*');
     }
 
     function ignoreNode(id, btn) {
       ignoredIds.add(id);
-      btn.closest('.unlinked-item').remove();
+      undoStack.push(id);
+      redoStack = [];
+      renderList();
+    }
+
+    function undoIgnore() {
+      if (undoStack.length === 0) return;
+      const id = undoStack.pop();
+      ignoredIds.delete(id);
+      redoStack.push(id);
+      renderList();
+    }
+
+    function redoIgnore() {
+      if (redoStack.length === 0) return;
+      const id = redoStack.pop();
+      ignoredIds.add(id);
+      undoStack.push(id);
+      renderList();
     }
 
     document.querySelectorAll('.tab').forEach(tab => {
@@ -494,6 +597,8 @@
 
     document.getElementById('run-styles').onclick = () => {
       ignoredIds.clear();
+      undoStack = [];
+      redoStack = [];
       setRunningState(true);
       resetResults('styles');
       parent.postMessage({ pluginMessage: { type: 'run-styles-check', subtab: currentSubTab } }, '*');
@@ -501,6 +606,8 @@
 
     document.getElementById('run-naming').onclick = () => {
       ignoredIds.clear();
+      undoStack = [];
+      redoStack = [];
       setRunningState(true);
       resetResults('naming');
       parent.postMessage({ pluginMessage: { type: 'run-naming-check' } }, '*');
@@ -528,13 +635,8 @@
         document.getElementById('naming-results-content').classList.remove('hidden');
         document.getElementById('naming-total').innerText = msg.total;
         document.getElementById('naming-unnamed').innerText = msg.unnamed;
-        document.getElementById('unnamed-count-badge').innerText = msg.unnamed + ' found';
-        const list = document.getElementById('unnamed-list');
-        list.innerHTML = '';
-        msg.unnamedNodes.forEach(node => {
-          const el = createListItem(node);
-          if (el) list.appendChild(el);
-        });
+        lastResultsNodes = msg.unnamedNodes;
+        renderList();
       }
 
       if (msg.type === 'color-results' || msg.type === 'text-results') {
@@ -544,14 +646,10 @@
         document.getElementById('style-remote-pct').innerText = total === 0 ? '0%' : Math.round((msg.remote / total) * 100) + '%';
         document.getElementById('style-local-pct').innerText = total === 0 ? '0%' : Math.round((msg.local / total) * 100) + '%';
         document.getElementById('style-unlinked-pct').innerText = total === 0 ? '0%' : Math.round((msg.unlinked / total) * 100) + '%';
-        const list = document.getElementById('unlinked-list');
-        list.innerHTML = '';
+
         document.getElementById('unlinked-title').innerText = currentSubTab === 'color' ? 'Unlinked Colors' : 'Unlinked Text Styles';
-        document.getElementById('unlinked-count-badge').innerText = msg.unlinkedNodes.length + ' found';
-        msg.unlinkedNodes.forEach(node => {
-          const el = createListItem(node);
-          if (el) list.appendChild(el);
-        });
+        lastResultsNodes = msg.unlinkedNodes;
+        renderList();
       }
     };
   </script>
