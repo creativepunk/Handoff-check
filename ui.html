@@ -309,6 +309,29 @@
       align-items: center;
     }
 
+    .btn-select-all {
+      margin-left: 24px;
+      color: var(--accent-color);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-select-all:hover:not(:disabled) {
+      background: rgba(24, 160, 251, 0.1);
+    }
+
+    .btn-select-all:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      color: var(--secondary-text);
+    }
+
     .hidden {
       display: none !important;
     }
@@ -415,9 +438,10 @@
             <div class="unlinked-header-left">
               <span id="unlinked-title">Unlinked Layers</span>
               <div class="history-controls">
-                <button id="style-undo" class="history-btn" onclick="undoIgnore()" title="Undo" disabled>↩</button>
-                <button id="style-redo" class="history-btn" onclick="redoIgnore()" title="Redo" disabled>↪</button>
+                <button id="styles-undo" class="history-btn" onclick="undoIgnore()" title="Undo" disabled>↩</button>
+                <button id="styles-redo" class="history-btn" onclick="redoIgnore()" title="Redo" disabled>↪</button>
               </div>
+              <button id="styles-select-all" class="btn-select-all" onclick="selectAll()" disabled>Select All</button>
             </div>
             <span id="unlinked-count-badge" style="color: var(--unlinked-text)">0 found</span>
           </div>
@@ -457,6 +481,7 @@
                 <button id="naming-undo" class="history-btn" onclick="undoIgnore()" title="Undo" disabled>↩</button>
                 <button id="naming-redo" class="history-btn" onclick="redoIgnore()" title="Redo" disabled>↪</button>
               </div>
+              <button id="naming-select-all" class="btn-select-all" onclick="selectAll()" disabled>Select All</button>
             </div>
             <span id="unnamed-count-badge" style="color: var(--unlinked-text)">0 found</span>
           </div>
@@ -477,8 +502,13 @@
     function updateHistoryButtons() {
       const undoBtn = document.getElementById(currentTab + '-undo');
       const redoBtn = document.getElementById(currentTab + '-redo');
+      const selectAllBtn = document.getElementById(currentTab + '-select-all');
+
       if (undoBtn) undoBtn.disabled = undoStack.length === 0;
       if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+
+      const visibleCount = lastResultsNodes.filter(n => !ignoredIds.has(n.id)).length;
+      if (selectAllBtn) selectAllBtn.disabled = visibleCount === 0;
     }
 
     function renderList() {
@@ -573,6 +603,14 @@
       ignoredIds.add(id);
       undoStack.push(id);
       renderList();
+    }
+
+    function selectAll() {
+      const visibleNodes = lastResultsNodes.filter(n => !ignoredIds.has(n.id));
+      const ids = visibleNodes.map(n => n.id);
+      if (ids.length > 0) {
+        parent.postMessage({ pluginMessage: { type: 'select-nodes', nodeIds: ids } }, '*');
+      }
     }
 
     document.querySelectorAll('.tab').forEach(tab => {

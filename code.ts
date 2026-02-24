@@ -23,6 +23,21 @@ figma.ui.onmessage = async (msg) => {
       return;
     }
 
+    if (msg.type === 'select-nodes') {
+      const nodes: SceneNode[] = [];
+      for (const id of msg.nodeIds) {
+        const node = await figma.getNodeByIdAsync(id);
+        if (node && (node.type !== "PAGE" && node.type !== "DOCUMENT")) {
+          nodes.push(node as SceneNode);
+        }
+      }
+      if (nodes.length > 0) {
+        figma.currentPage.selection = nodes;
+        figma.viewport.scrollAndZoomIntoView(nodes);
+      }
+      return;
+    }
+
     if (selection.length === 0 && (msg.type === 'run-naming-check' || msg.type === 'run-styles-check')) {
       figma.ui.postMessage({ type: 'empty-selection' });
       return;
