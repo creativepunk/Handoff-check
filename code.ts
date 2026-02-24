@@ -4,6 +4,14 @@ function isFrameLike(node: SceneNode): boolean {
   return node.type === "FRAME" || node.type === "COMPONENT" || node.type === "INSTANCE" || node.type === "COMPONENT_SET" || node.type === "SECTION";
 }
 
+function rgbToHex(r: number, g: number, b: number): string {
+  const toHex = (c: number) => {
+    const hex = Math.round(c * 255).toString(16);
+    return hex.length === 1 ? '0' + hex : hex;
+  };
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+}
+
 figma.ui.onmessage = async (msg) => {
   const selection = figma.currentPage.selection;
   console.log('[BACKEND] Received:', msg.type, msg.subtab);
@@ -44,38 +52,27 @@ figma.ui.onmessage = async (msg) => {
     }
 
     if (msg.type === 'run-naming-check') {
-      let allFrames: SceneNode[] = [];
+      let allNodes: SceneNode[] = [];
       const visited = new Set<string>();
-      const findFrames = (nodes: readonly SceneNode[]) => {
+      const collectAll = (nodes: readonly SceneNode[]) => {
         for (const node of nodes) {
           if (visited.has(node.id)) continue;
           visited.add(node.id);
-          if (isFrameLike(node)) allFrames.push(node);
-          if ("children" in node) try { findFrames((node as any).children); } catch (e) { }
+          allNodes.push(node);
+          if ("children" in node) try { collectAll((node as any).children); } catch (e) { }
         }
       };
-      findFrames(selection);
+      collectAll(selection);
 
-      if (allFrames.length === 0) {
-        for (const node of selection) {
-          let parent = node.parent;
-          while (parent && parent.type !== "PAGE" && parent.type !== "DOCUMENT") {
-            if (isFrameLike(parent as any) && !visited.has(parent.id)) {
-              allFrames.push(parent as any);
-              visited.add(parent.id);
-              break;
-            }
-            parent = parent.parent;
-          }
-        }
-      }
+      const unnamed = allNodes.filter(n => /^Frame \d+$/.test(n.name) || /^Rectangle \d+$/.test(n.name) || /^Ellipse \d+$/.test(n.name) || /^Vector \d+$/.test(n.name) || /^Group \d+$/.test(n.name));
+      const named = allNodes.filter(n => unnamed.indexOf(n) === -1);
 
-      const unnamed = allFrames.filter(f => /^Frame \d+$/.test(f.name));
       figma.ui.postMessage({
         type: 'naming-results',
-        total: allFrames.length,
+        total: allNodes.length,
         unnamed: unnamed.length,
-        unnamedNodes: unnamed.map(n => ({ id: n.id, name: n.name }))
+        unnamedNodes: unnamed.map(n => ({ id: n.id, name: n.name, type: n.type })),
+        namedNodes: named.map(n => ({ id: n.id, name: n.name, type: n.type }))
       });
     }
 
@@ -83,7 +80,12 @@ figma.ui.onmessage = async (msg) => {
       if (msg.subtab === 'color') {
         console.log('--- [BACKEND] STARTING COLOR CHECK ---');
         let remote = 0, localCount = 0, unlinked = 0, totalAnalyzedCount = 0;
-        const unlinkedNodes: { id: string, name: string }[] = [];
+
+        type ColorNodeInfo = { id: string, name: string, type: SceneNode['type'], colors: { type: 'fill' | 'stroke', hex: string, style?: string }[] };
+        const unlinkedNodes: ColorNodeInfo[] = [];
+        const remoteNodes: ColorNodeInfo[] = [];
+        const localNodes: ColorNodeInfo[] = [];
+
         const visitedNodes = new Set<string>();
         const potentialColorNodes: SceneNode[] = [];
 
@@ -97,45 +99,65 @@ figma.ui.onmessage = async (msg) => {
           }
         };
         collect(selection);
-        console.log(`[BACKEND] Phase 1: Found ${potentialColorNodes.length} nodes to analyze.`);
 
         // Phase 3: Analyze
-        console.log('[BACKEND] Phase 3: Analyzing colors...');
         for (const node of potentialColorNodes) {
           try {
-            let isUnlinkedNode = false;
+            let nodeIsRemote = false, nodeIsLocal = false, nodeIsUnlinked = false;
+            let nodeColors: { type: 'fill' | 'stroke', hex: string, style?: string, status: 'unlinked' | 'remote' | 'local' }[] = [];
+
+            const processColorItem = async (paint: Paint, pType: 'fill' | 'stroke', styleId: string | typeof figma.mixed, boundVars: any) => {
+              if (paint.type !== 'SOLID' && !paint.type.includes('GRADIENT')) return;
+              totalAnalyzedCount++;
+
+              let hex = paint.type === 'SOLID' ? rgbToHex(paint.color.r, paint.color.g, paint.color.b) : 'GRADIENT';
+              let found = false;
+              let styleName = '';
+              let status: 'unlinked' | 'remote' | 'local' = 'unlinked';
+
+              // Variables check
+              if (boundVars) {
+                if (boundVars.id) {
+                  try {
+                    const v = await figma.variables.getVariableByIdAsync(boundVars.id);
+                    if (v) {
+                      status = v.remote ? 'remote' : 'local';
+                      styleName = v.name;
+                      found = true;
+                    }
+                  } catch (e) { }
+                }
+              }
+
+              if (!found && styleId && styleId !== '' && styleId !== figma.mixed) {
+                const s = figma.getStyleById(styleId as string);
+                if (s) {
+                  status = s.remote ? 'remote' : 'local';
+                  styleName = s.name;
+                  found = true;
+                } else {
+                  status = 'remote'; // assume remote if style exists but not found
+                  found = true;
+                }
+              }
+
+              if (!found) { unlinked++; nodeIsUnlinked = true; status = 'unlinked'; }
+              else if (status === 'remote') { remote++; nodeIsRemote = true; }
+              else { localCount++; nodeIsLocal = true; }
+
+              nodeColors.push({ type: pType, hex, style: styleName, status });
+            };
 
             // Fills
             if ("fills" in node) {
               const fills = (node as any).fills;
               if (fills === figma.mixed) {
-                totalAnalyzedCount++; unlinked++; isUnlinkedNode = true;
+                totalAnalyzedCount++; unlinked++; nodeIsUnlinked = true;
+                nodeColors.push({ type: 'fill', hex: 'MIXED', status: 'unlinked' });
               } else if (Array.isArray(fills)) {
-                const fillStyleId = (node as any).fillStyleId;
                 for (let i = 0; i < fills.length; i++) {
-                  const fill = fills[i];
-                  if (fill.type === 'SOLID' || fill.type.includes('GRADIENT')) {
-                    totalAnalyzedCount++;
-                    let found = false;
-                    // Variables check
-                    if (node.boundVariables && node.boundVariables.fills) {
-                      const bound = Array.isArray(node.boundVariables.fills) ? node.boundVariables.fills[i] : node.boundVariables.fills;
-                      if (bound && bound.id) {
-                        try {
-                          const v = await figma.variables.getVariableByIdAsync(bound.id);
-                          if (v) { if (v.remote) remote++; else localCount++; found = true; }
-                        } catch (e) { }
-                      }
-                    }
-                    if (found) continue;
-                    // Styles check
-                    if (fillStyleId && fillStyleId !== '' && fillStyleId !== figma.mixed) {
-                      const s = figma.getStyleById(fillStyleId);
-                      if (s) { if (s.remote) remote++; else localCount++; found = true; }
-                      else { remote++; found = true; }
-                    }
-                    if (!found) { unlinked++; isUnlinkedNode = true; }
-                  }
+                  const bound = node.boundVariables && node.boundVariables.fills ? (Array.isArray(node.boundVariables.fills) ? node.boundVariables.fills[i] : node.boundVariables.fills) : null;
+                  await processColorItem(fills[i], 'fill', (node as any).fillStyleId, bound);
                 }
               }
             }
@@ -144,53 +166,45 @@ figma.ui.onmessage = async (msg) => {
             if ("strokes" in node) {
               const strokes = (node as any).strokes;
               if (strokes === figma.mixed) {
-                totalAnalyzedCount++; unlinked++; isUnlinkedNode = true;
+                totalAnalyzedCount++; unlinked++; nodeIsUnlinked = true;
+                nodeColors.push({ type: 'stroke', hex: 'MIXED', status: 'unlinked' });
               } else if (Array.isArray(strokes)) {
-                const strokeStyleId = (node as any).strokeStyleId;
                 for (let i = 0; i < strokes.length; i++) {
-                  const stroke = strokes[i];
-                  if (stroke.type === 'SOLID' || stroke.type.includes('GRADIENT')) {
-                    totalAnalyzedCount++;
-                    let found = false;
-                    // Variables check
-                    if (node.boundVariables && node.boundVariables.strokes) {
-                      const bound = Array.isArray(node.boundVariables.strokes) ? node.boundVariables.strokes[i] : node.boundVariables.strokes;
-                      if (bound && bound.id) {
-                        try {
-                          const v = await figma.variables.getVariableByIdAsync(bound.id);
-                          if (v) { if (v.remote) remote++; else localCount++; found = true; }
-                        } catch (e) { }
-                      }
-                    }
-                    if (found) continue;
-                    // Styles check
-                    if (strokeStyleId && strokeStyleId !== '' && strokeStyleId !== figma.mixed) {
-                      const s = figma.getStyleById(strokeStyleId);
-                      if (s) { if (s.remote) remote++; else localCount++; found = true; }
-                      else { remote++; found = true; }
-                    }
-                    if (!found) { unlinked++; isUnlinkedNode = true; }
-                  }
+                  const bound = node.boundVariables && node.boundVariables.strokes ? (Array.isArray(node.boundVariables.strokes) ? node.boundVariables.strokes[i] : node.boundVariables.strokes) : null;
+                  await processColorItem(strokes[i], 'stroke', (node as any).strokeStyleId, bound);
                 }
               }
             }
 
-            if (isUnlinkedNode) {
-              unlinkedNodes.push({ id: node.id, name: node.name });
-            }
+            const info: ColorNodeInfo = { id: node.id, name: node.name, type: node.type, colors: [] };
+            if (nodeIsUnlinked) unlinkedNodes.push({ ...info, colors: nodeColors.filter(c => c.status === 'unlinked') });
+            if (nodeIsRemote) remoteNodes.push({ ...info, colors: nodeColors.filter(c => c.status === 'remote') });
+            if (nodeIsLocal) localNodes.push({ ...info, colors: nodeColors.filter(c => c.status === 'local') });
+
           } catch (e) { }
         }
 
-        figma.ui.postMessage({ type: 'color-results', total: totalAnalyzedCount, remote, local: localCount, unlinked, unlinkedNodes });
-        console.log('[BACKEND] Color results sent');
+        figma.ui.postMessage({
+          type: 'color-results',
+          total: totalAnalyzedCount,
+          remote,
+          local: localCount,
+          unlinked,
+          unlinkedNodes,
+          remoteNodes,
+          localNodes
+        });
       }
 
       if (msg.subtab === 'text') {
-        console.log('--- [BACKEND] STARTING TEXT CHECK ---');
         let remote = 0, localCountValue = 0, unlinkedCountValue = 0, totalAnalyzedCountValue = 0;
         const textNodes: TextNode[] = [];
         const visited = new Set<string>();
-        const unlinkedNodes: { id: string, name: string }[] = [];
+
+        type TextNodeInfo = { id: string, name: string, type: 'TEXT' };
+        const unlinkedNodes: TextNodeInfo[] = [];
+        const remoteNodes: TextNodeInfo[] = [];
+        const localNodes: TextNodeInfo[] = [];
 
         const collect = (nodes: readonly SceneNode[]) => {
           for (const n of nodes) {
@@ -201,73 +215,54 @@ figma.ui.onmessage = async (msg) => {
           }
         };
         collect(selection);
-        console.log(`[BACKEND] Phase 1: Found ${textNodes.length} nodes to analyze.`);
 
         // Phase 2: Registry
-        const localStyleIds = new Set<string>();
-        const localStyleKeys = new Set<string>();
         const localStyleNames = new Set<string>();
         try {
           const localStyles = figma.getLocalTextStyles();
-          for (const s of localStyles) {
-            localStyleIds.add(s.id);
-            localStyleKeys.add(s.key);
-            localStyleNames.add(s.name.toLowerCase());
-          }
+          for (const s of localStyles) { localStyleNames.add(s.name.toLowerCase()); }
         } catch (err) { }
-
-        const isIdLocal = (sid: string): boolean => {
-          if (!sid) return false;
-          if (localStyleIds.has(sid) || localStyleKeys.has(sid)) return true;
-          const noSPrefix = sid.startsWith('S:') ? sid.substring(2) : sid;
-          if (localStyleIds.has(noSPrefix)) return true;
-          const firstPart = sid.split(',')[0];
-          const cleanFirstPart = firstPart.startsWith('S:') ? firstPart.substring(2) : firstPart;
-          if (localStyleIds.has(cleanFirstPart) || localStyleKeys.has(cleanFirstPart)) return true;
-          for (const lid of localStyleIds) {
-            const clid = lid.startsWith('S:') ? lid.substring(2) : lid;
-            if (sid.includes(clid)) return true;
-          }
-          return false;
-        };
 
         // Phase 3: Analyze
         for (const node of textNodes) {
           try {
             const sid = node.textStyleId;
-            let nodeHasUnlinked = false;
+            let nodeHasUnlinked = false, nodeHasRemote = false, nodeHasLocal = false;
+
             const processSid = (sidVal: string | typeof figma.mixed) => {
               totalAnalyzedCountValue++;
-              if (!sidVal || typeof sidVal !== 'string' || sidVal === '') {
-                unlinkedCountValue++; nodeHasUnlinked = true; return;
-              }
-              let isLocal = isIdLocal(sidVal);
-              if (!isLocal) {
-                try {
-                  const versions = [sidVal, sidVal.replace(/^S:/, ''), sidVal.split(',')[0]];
-                  for (const v of versions) {
-                    const style = figma.getStyleById(v);
-                    if (style) {
-                      if (!style.remote || localStyleNames.has(style.name.toLowerCase())) {
-                        isLocal = true; break;
-                      }
-                    }
-                  }
-                } catch (e) { }
-              }
-              if (isLocal) localCountValue++; else remote++;
+              if (!sidVal || typeof sidVal !== 'string' || sidVal === '') { unlinkedCountValue++; nodeHasUnlinked = true; return; }
+              let style = null;
+              try { style = figma.getStyleById(sidVal); } catch (e) { }
+              if (style) {
+                if (!style.remote || localStyleNames.has(style.name.toLowerCase())) { localCountValue++; nodeHasLocal = true; }
+                else { remote++; nodeHasRemote = true; }
+              } else { remote++; nodeHasRemote = true; }
             };
+
             if (sid === figma.mixed) {
               try {
                 const segments = node.getStyledTextSegments(['textStyleId']);
                 for (const seg of segments) processSid(seg.textStyleId);
               } catch (segErr) { totalAnalyzedCountValue++; unlinkedCountValue++; nodeHasUnlinked = true; }
             } else processSid(sid);
-            if (nodeHasUnlinked) unlinkedNodes.push({ id: node.id, name: node.name });
+
+            const info: TextNodeInfo = { id: node.id, name: node.name, type: 'TEXT' };
+            if (nodeHasUnlinked) unlinkedNodes.push(info);
+            if (nodeHasRemote) remoteNodes.push(info);
+            if (nodeHasLocal) localNodes.push(info);
           } catch (err) { }
         }
-        figma.ui.postMessage({ type: 'text-results', total: totalAnalyzedCountValue, remote, local: localCountValue, unlinked: unlinkedCountValue, unlinkedNodes });
-        console.log('[BACKEND] Text results sent');
+        figma.ui.postMessage({
+          type: 'text-results',
+          total: totalAnalyzedCountValue,
+          remote,
+          local: localCountValue,
+          unlinked: unlinkedCountValue,
+          unlinkedNodes,
+          remoteNodes,
+          localNodes
+        });
       }
     }
   } catch (globalErr) {

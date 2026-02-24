@@ -72,6 +72,7 @@
       border-radius: 4px;
     }
 
+
     .sub-tab.active {
       background: var(--card-bg);
       color: var(--text-color);
@@ -136,6 +137,22 @@
       padding: 12px 6px;
       border-radius: 8px;
       text-align: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .result-card:hover:not(.active) {
+      background: #363636;
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .result-card.active {
+      background: #3d3d3d;
+      border-color: var(--accent-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     .result-value {
@@ -307,6 +324,186 @@
     .unlinked-header-left {
       display: flex;
       align-items: center;
+      gap: 12px;
+    }
+
+    /* Group Styles */
+    .color-group-header {
+      background: #363636;
+      padding: 6px 10px;
+      border-radius: 4px;
+      margin: 12px 0 6px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--secondary-text);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .color-group-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .color-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-group-select,
+    .btn-group-ignore {
+      background: none;
+      border: none;
+      font-size: 9px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    .btn-group-select {
+      color: var(--accent-color);
+    }
+
+    .btn-group-ignore {
+      color: var(--secondary-text);
+    }
+
+    .btn-group-select:hover,
+    .btn-group-ignore:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .group-actions {
+      display: flex;
+      gap: 4px;
+    }
+
+    /* Accordion Styles */
+    .color-group-header {
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s;
+    }
+
+    .color-group-header:hover {
+      background: #404040;
+    }
+
+    .chevron {
+      width: 10px;
+      height: 10px;
+      transition: transform 0.2s;
+      margin-right: 4px;
+      opacity: 0.5;
+    }
+
+    .collapsed .chevron {
+      transform: rotate(-90deg);
+    }
+
+    .accordion-content {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .collapsed+.accordion-content {
+      display: none;
+    }
+
+    .unlinked-header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }
+
+    /* Filter Dropdown */
+    .filter-container {
+      position: relative;
+    }
+
+    .filter-icon {
+      width: 18px;
+      height: 18px;
+      display: block;
+      fill: currentColor;
+      /* inherits from button text color */
+    }
+
+    .filter-trigger {
+      background: none;
+      border: none;
+      color: var(--secondary-text);
+      padding: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+    }
+
+    .filter-trigger:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-color);
+    }
+
+    .filter-trigger .material-symbols-outlined {
+      font-size: 18px;
+      display: block;
+    }
+
+    .filter-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: #2d2d2d;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px;
+      z-index: 100;
+      width: 140px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: none;
+      margin-top: 4px;
+    }
+
+    .filter-dropdown.show {
+      display: block;
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      cursor: pointer;
+      font-size: 11px;
+      color: var(--secondary-text);
+      border-radius: 4px;
+    }
+
+    .filter-option:hover {
+      background: #3d3d3d;
+      color: white;
+    }
+
+    .filter-option.indented {
+      padding-left: 24px;
+    }
+
+    .filter-separator {
+      height: 1px;
+      background: #444;
+      margin: 4px 8px;
     }
 
     .btn-select-all {
@@ -324,6 +521,28 @@
 
     .btn-select-all:hover:not(:disabled) {
       background: rgba(24, 160, 251, 0.1);
+    }
+
+    .btn-ignore-all {
+      color: var(--secondary-text);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-ignore-all:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-color);
+    }
+
+    .btn-ignore-all:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
     }
 
     .btn-select-all:disabled {
@@ -419,15 +638,15 @@
 
       <div id="styles-results-content" class="hidden">
         <div class="results-grid">
-          <div class="result-card">
+          <div id="style-card-remote" class="result-card" onclick="updateCategory('remote')">
             <span class="result-label label-remote">Remote</span>
             <div id="style-remote-pct" class="result-value">0%</div>
           </div>
-          <div class="result-card">
+          <div id="style-card-local" class="result-card" onclick="updateCategory('local')">
             <span class="result-label label-local">Local</span>
             <div id="style-local-pct" class="result-value">0%</div>
           </div>
-          <div class="result-card">
+          <div id="style-card-unlinked" class="result-card active" onclick="updateCategory('unlinked')">
             <span class="result-label label-unlinked">Unlinked</span>
             <div id="style-unlinked-pct" class="result-value">0%</div>
           </div>
@@ -441,9 +660,41 @@
                 <button id="styles-undo" class="history-btn" onclick="undoIgnore()" title="Undo" disabled>↩</button>
                 <button id="styles-redo" class="history-btn" onclick="redoIgnore()" title="Redo" disabled>↪</button>
               </div>
-              <button id="styles-select-all" class="btn-select-all" onclick="selectAll()" disabled>Select All</button>
             </div>
-            <span id="unlinked-count-badge" style="color: var(--unlinked-text)">0 found</span>
+            <div class="unlinked-header-right">
+              <span id="unlinked-count-badge" style="color: var(--unlinked-text);">0 found</span>
+              <div id="styles-filter-container" class="filter-container">
+                <button class="filter-trigger" onclick="toggleFilter()">
+                  <svg class="filter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960"
+                    aria-hidden="true">
+                    <path d="M400-240v-80h160v80H400ZM240-440v-80h480v80H240ZM120-640v-80h720v80H120Z" />
+                  </svg>
+                </button>
+                <div class="filter-dropdown">
+                  <div class="filter-option">
+                    <input type="checkbox" id="filter-fill" checked onchange="toggleScope('Fill', this.checked)">
+                    <span>Fill</span>
+                  </div>
+                  <div class="filter-option indented">
+                    <input type="checkbox" id="filter-frame" checked onchange="toggleType('Frame', this.checked)">
+                    <span>Frame</span>
+                  </div>
+                  <div class="filter-option indented">
+                    <input type="checkbox" id="filter-shape" checked onchange="toggleType('Shape', this.checked)">
+                    <span>Shape</span>
+                  </div>
+                  <div class="filter-option indented">
+                    <input type="checkbox" id="filter-text" checked onchange="toggleType('Text', this.checked)">
+                    <span>Text</span>
+                  </div>
+                  <div class="filter-separator"></div>
+                  <div class="filter-option">
+                    <input type="checkbox" id="filter-stroke" checked onchange="toggleScope('Stroke', this.checked)">
+                    <span>Stroke</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div id="unlinked-list" class="unlinked-list"></div>
         </div>
@@ -463,11 +714,11 @@
 
       <div id="naming-results-content" class="hidden">
         <div class="results-grid" style="grid-template-columns: 1fr 1fr;">
-          <div class="result-card">
-            <span class="result-label label-naming">Total Frames</span>
+          <div id="naming-card-named" class="result-card" onclick="updateCategory('named')">
+            <span class="result-label label-naming">Named Frames</span>
             <div id="naming-total" class="result-value">0</div>
           </div>
-          <div class="result-card">
+          <div id="naming-card-unnamed" class="result-card active" onclick="updateCategory('unnamed')">
             <span class="result-label label-unlinked">Unnamed</span>
             <div id="naming-unnamed" class="result-value">0</div>
           </div>
@@ -481,87 +732,280 @@
                 <button id="naming-undo" class="history-btn" onclick="undoIgnore()" title="Undo" disabled>↩</button>
                 <button id="naming-redo" class="history-btn" onclick="redoIgnore()" title="Redo" disabled>↪</button>
               </div>
-              <button id="naming-select-all" class="btn-select-all" onclick="selectAll()" disabled>Select All</button>
+              <button id="naming-select-all" class="btn-select-all" onclick="selectAll()" disabled
+                style="margin-left: 8px;">Select All</button>
             </div>
-            <span id="unnamed-count-badge" style="color: var(--unlinked-text)">0 found</span>
+            <div class="unlinked-header-right">
+              <span id="unnamed-count-badge" style="color: var(--unlinked-text)">0 found</span>
+            </div>
           </div>
           <div id="unnamed-list" class="unlinked-list"></div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <script>
-    let currentTab = 'styles';
-    let currentSubTab = 'color';
-    let ignoredIds = new Set();
-    let undoStack = [];
-    let redoStack = [];
-    let lastResultsNodes = [];
+      <script>
+        let currentTab = 'styles';
+        let currentSubTab = 'color';
+        let currentCategory = 'unlinked';
+        let ignoredIds = new Set();
+        let undoStack = [];
+        let redoStack = [];
+        let resultSets = {
+          styles: { remote: [], local: [], unlinked: [] },
+          naming: { named: [], unnamed: [] }
+        };
 
-    function updateHistoryButtons() {
-      const undoBtn = document.getElementById(currentTab + '-undo');
-      const redoBtn = document.getElementById(currentTab + '-redo');
-      const selectAllBtn = document.getElementById(currentTab + '-select-all');
+        let activeTypes = new Set(['Frame', 'Shape', 'Text']);
+        let activeScopes = new Set(['Fill', 'Stroke']);
+        let collapsedGroups = new Set();
 
-      if (undoBtn) undoBtn.disabled = undoStack.length === 0;
-      if (redoBtn) redoBtn.disabled = redoStack.length === 0;
-
-      const visibleCount = lastResultsNodes.filter(n => !ignoredIds.has(n.id)).length;
-      if (selectAllBtn) selectAllBtn.disabled = visibleCount === 0;
-    }
-
-    function renderList() {
-      const listId = currentTab === 'styles' ? 'unlinked-list' : 'unnamed-list';
-      const badgeId = currentTab === 'styles' ? 'unlinked-count-badge' : 'unnamed-count-badge';
-      const list = document.getElementById(listId);
-      list.innerHTML = '';
-
-      const visibleNodes = lastResultsNodes.filter(n => !ignoredIds.has(n.id));
-      document.getElementById(badgeId).innerText = visibleNodes.length + ' found';
-
-      visibleNodes.forEach(node => {
-        const el = createListItem(node);
-        if (el) list.appendChild(el);
-      });
-      updateHistoryButtons();
-    }
-
-    function showError(msg) {
-      const el = document.getElementById('error-message');
-      el.innerText = msg;
-      el.classList.remove('hidden');
-      setTimeout(() => el.classList.add('hidden'), 5000);
-    }
-
-    function setRunningState(isRunning) {
-      const btns = document.querySelectorAll('.btn-run');
-      btns.forEach(btn => {
-        if (isRunning) {
-          btn.classList.add('loading');
-          btn.disabled = true;
-        } else {
-          btn.classList.remove('loading');
-          btn.disabled = false;
+        function getNodeCategory(type) {
+          if (['FRAME', 'COMPONENT', 'INSTANCE', 'COMPONENT_SET', 'SECTION', 'GROUP'].indexOf(type) !== -1) return 'Frame';
+          if (type === 'TEXT') return 'Text';
+          return 'Shape';
         }
-      });
-    }
 
-    function resetResults(panelId) {
-      document.getElementById(panelId + '-placeholder').classList.remove('hidden');
-      document.getElementById(panelId + '-results-content').classList.add('hidden');
-      if (panelId === 'styles') {
-        document.getElementById('unlinked-list').innerHTML = '';
-      } else {
-        document.getElementById('unnamed-list').innerHTML = '';
-      }
-    }
+        function isNodeVisible(node) {
+          if (ignoredIds.has(node.id)) return false;
 
-    function createListItem(node) {
-      if (ignoredIds.has(node.id)) return null;
-      const item = document.createElement('div');
-      item.className = 'unlinked-item';
-      item.innerHTML = `
+          const mappedType = getNodeCategory(node.type);
+          const typeMatch = activeTypes.has(mappedType);
+
+          // Filter for Color subtab specifically
+          if (currentTab === 'styles' && currentSubTab === 'color') {
+            const hasScopeMatch = (node.colors || []).some(c => {
+              if (c.type === 'fill' && activeScopes.has('Fill')) return true;
+              if (c.type === 'stroke' && activeScopes.has('Stroke')) return true;
+              return false;
+            });
+            return typeMatch && hasScopeMatch;
+          }
+          return typeMatch;
+        }
+
+        function updateHistoryButtons() {
+          const undoBtn = document.getElementById(currentTab + '-undo');
+          const redoBtn = document.getElementById(currentTab + '-redo');
+          const selectAllBtn = document.getElementById(currentTab + '-select-all');
+          const ignoreAllBtn = document.getElementById(currentTab + '-ignore-all');
+
+          if (undoBtn) undoBtn.disabled = undoStack.length === 0;
+          if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+
+          const nodes = (resultSets[currentTab][currentCategory] || []).filter(n => isNodeVisible(n));
+          if (selectAllBtn) selectAllBtn.disabled = nodes.length === 0;
+          if (ignoreAllBtn) ignoreAllBtn.disabled = nodes.length === 0;
+        }
+
+        function toggleFilter() {
+          // Find the dropdown in the currently active panel
+          const panel = document.querySelector('.panel.active');
+          const dropdown = panel.querySelector('.filter-dropdown');
+
+          // Close any other open dropdowns first
+          document.querySelectorAll('.filter-dropdown').forEach(d => {
+            if (d !== dropdown) d.classList.remove('show');
+          });
+
+          dropdown.classList.toggle('show');
+        }
+
+        function toggleScope(scope, checked) {
+          if (checked) activeScopes.add(scope);
+          else activeScopes.delete(scope);
+
+          // Master Logic: If "Fill" is toggled, update all children to match
+          if (scope === 'Fill') {
+            ['Frame', 'Shape', 'Text'].forEach(type => {
+              if (checked) activeTypes.add(type);
+              else activeTypes.delete(type);
+            });
+          }
+
+          syncFilterCheckboxes();
+          renderList();
+        }
+
+        function toggleType(type, checked) {
+          if (checked) {
+            activeTypes.add(type);
+            activeScopes.add('Fill'); // Re-enable Fill scope if any child is checked
+          } else {
+            activeTypes.delete(type);
+            // Only disable Fill scope if ALL children are unchecked
+            const anyLeft = activeTypes.has('Frame') || activeTypes.has('Shape') || activeTypes.has('Text');
+            if (!anyLeft) activeScopes.delete('Fill');
+          }
+
+          syncFilterCheckboxes();
+          renderList();
+        }
+
+        function updateCategory(category) {
+          currentCategory = category;
+          const prefix = currentTab === 'styles' ? 'style-card-' : 'naming-card-';
+          document.querySelectorAll('.result-card').forEach(card => card.classList.remove('active'));
+          const activeCard = document.getElementById(prefix + category);
+          if (activeCard) activeCard.classList.add('active');
+
+          const titleEl = document.getElementById('unlinked-title');
+          if (titleEl) {
+            if (currentTab === 'styles') {
+              const catName = category.charAt(0).toUpperCase() + category.slice(1);
+              const subtabName = currentSubTab === 'color' ? 'Colors' : 'Text Styles';
+              titleEl.innerText = `${catName} ${subtabName}`;
+            } else {
+              titleEl.innerText = category === 'unnamed' ? 'Unnamed Frames' : 'Named Frames';
+            }
+          }
+          renderList();
+        }
+
+        function renderList() {
+          const listId = currentTab === 'styles' ? 'unlinked-list' : 'unnamed-list';
+          const badgeId = currentTab === 'styles' ? 'unlinked-count-badge' : 'unnamed-count-badge';
+          const list = document.getElementById(listId);
+          list.innerHTML = '';
+
+          const nodes = resultSets[currentTab][currentCategory] || [];
+          const visibleNodes = nodes.filter(n => isNodeVisible(n));
+          document.getElementById(badgeId).innerText = visibleNodes.length + ' found';
+
+          if (currentTab === 'styles' && currentSubTab === 'color') {
+            renderGroupedColorList(list, visibleNodes);
+          } else {
+            visibleNodes.forEach(node => {
+              const el = createListItem(node);
+              if (el) list.appendChild(el);
+            });
+          }
+          updateHistoryButtons();
+        }
+
+        function renderGroupedColorList(container, nodes) {
+          const groups = {};
+          nodes.forEach(node => {
+            const colorSet = new Set();
+            (node.colors || []).forEach(c => {
+              const key = c.hex === 'GRADIENT' ? 'GRADIENT' : (c.hex === 'MIXED' ? 'MIXED' : c.hex);
+              if (!groups[key]) groups[key] = { items: [], hex: key, label: c.style || key };
+              if (!colorSet.has(key)) {
+                groups[key].items.push(node);
+                colorSet.add(key);
+              }
+            });
+            if (!node.colors || node.colors.length === 0) {
+              if (!groups['NO_COLOR']) groups['NO_COLOR'] = { items: [], hex: 'transparent', label: 'No Color' };
+              groups['NO_COLOR'].items.push(node);
+            }
+          });
+
+          Object.values(groups).sort((a, b) => a.label.localeCompare(b.label)).forEach(group => {
+            const header = document.createElement('div');
+            header.className = 'color-group-header';
+            const info = document.createElement('div');
+            info.className = 'color-group-info';
+            if (group.hex !== 'GRADIENT' && group.hex !== 'MIXED') {
+              const swatch = document.createElement('div');
+              swatch.className = 'color-swatch';
+              swatch.style.backgroundColor = group.hex;
+              info.appendChild(swatch);
+            }
+            const label = document.createElement('span');
+            label.innerText = `${group.label} (${group.items.length})`;
+            info.appendChild(label);
+
+            const actions = document.createElement('div');
+            actions.className = 'group-actions';
+
+            const selectBtn = document.createElement('button');
+            selectBtn.className = 'btn-group-select';
+            selectBtn.innerText = 'Select All';
+            selectBtn.onclick = (e) => { e.stopPropagation(); selectGroup(group.items); };
+
+            const ignoreBtn = document.createElement('button');
+            ignoreBtn.className = 'btn-group-ignore';
+            ignoreBtn.innerText = 'Ignore All';
+            ignoreBtn.onclick = (e) => { e.stopPropagation(); ignoreBulk(group.items); };
+
+            actions.appendChild(selectBtn);
+            actions.appendChild(ignoreBtn);
+
+            header.appendChild(info);
+            header.appendChild(actions);
+
+            // Add chevron and click handler for accordion
+            const chevron = document.createElement('span');
+            chevron.className = 'chevron';
+            chevron.innerHTML = '▼';
+            info.prepend(chevron);
+
+            const isCollapsed = collapsedGroups.has(group.hex);
+            if (isCollapsed) header.classList.add('collapsed');
+
+            header.onclick = (e) => {
+              if (e.target.tagName === 'BUTTON') return;
+              toggleGroup(group.hex);
+            };
+
+            const content = document.createElement('div');
+            content.className = 'accordion-content';
+
+            group.items.forEach(node => {
+              const el = createListItem(node);
+              if (el) content.appendChild(el);
+            });
+
+            container.appendChild(header);
+            container.appendChild(content);
+          });
+        }
+
+        function toggleGroup(groupId) {
+          if (collapsedGroups.has(groupId)) collapsedGroups.delete(groupId);
+          else collapsedGroups.add(groupId);
+          renderList();
+        }
+
+        function selectGroup(nodes) {
+          const ids = nodes.map(n => n.id);
+          parent.postMessage({ pluginMessage: { type: 'select-nodes', nodeIds: ids } }, '*');
+        }
+
+        function showError(msg) {
+          const el = document.getElementById('error-message');
+          el.innerText = msg;
+          el.classList.remove('hidden');
+          setTimeout(() => el.classList.add('hidden'), 5000);
+        }
+
+        function setRunningState(isRunning) {
+          const btns = document.querySelectorAll('.btn-run');
+          btns.forEach(btn => {
+            if (isRunning) {
+              btn.classList.add('loading');
+              btn.disabled = true;
+            } else {
+              btn.classList.remove('loading');
+              btn.disabled = false;
+            }
+          });
+        }
+
+        function resetResults(panelId) {
+          document.getElementById(panelId + '-placeholder').classList.remove('hidden');
+          document.getElementById(panelId + '-results-content').classList.add('hidden');
+          if (panelId === 'styles') {
+            document.getElementById('unlinked-list').innerHTML = '';
+          } else {
+            document.getElementById('unnamed-list').innerHTML = '';
+          }
+        }
+
+        function createListItem(node) {
+          const item = document.createElement('div');
+          item.className = 'unlinked-item';
+          item.innerHTML = `
         <div class="unlinked-info">
           <div class="node-name" title="${node.name}">${node.name || 'Unnamed Layer'}</div>
         </div>
@@ -570,127 +1014,187 @@
           <button class="action-btn" onclick="ignoreNode('${node.id}', this)">Ignore</button>
         </div>
       `;
-      return item;
-    }
+          return item;
+        }
 
-    function selectNode(id, btn) {
-      // Remove focused state from all action buttons
-      document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('focused'));
-      // Add focused state to current button
-      if (btn) btn.classList.add('focused');
+        function selectNode(id, btn) {
+          document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('focused'));
+          if (btn) btn.classList.add('focused');
+          parent.postMessage({ pluginMessage: { type: 'select-node', nodeId: id } }, '*');
+        }
 
-      parent.postMessage({ pluginMessage: { type: 'select-node', nodeId: id } }, '*');
-    }
+        function ignoreNode(id, btn) {
+          ignoredIds.add(id);
+          undoStack.push([id]); // Push as array for bulk undo support
+          redoStack = [];
+          renderList();
+        }
 
-    function ignoreNode(id, btn) {
-      ignoredIds.add(id);
-      undoStack.push(id);
-      redoStack = [];
-      renderList();
-    }
+        function ignoreBulk(nodes) {
+          const ids = nodes.map(n => n.id);
+          if (ids.length === 0) return;
+          ids.forEach(id => ignoredIds.add(id));
+          undoStack.push(ids);
+          redoStack = [];
+          renderList();
+        }
 
-    function undoIgnore() {
-      if (undoStack.length === 0) return;
-      const id = undoStack.pop();
-      ignoredIds.delete(id);
-      redoStack.push(id);
-      renderList();
-    }
+        function ignoreAll() {
+          const nodes = resultSets[currentTab][currentCategory] || [];
+          const visibleNodes = nodes.filter(n => isNodeVisible(n));
+          ignoreBulk(visibleNodes);
+        }
 
-    function redoIgnore() {
-      if (redoStack.length === 0) return;
-      const id = redoStack.pop();
-      ignoredIds.add(id);
-      undoStack.push(id);
-      renderList();
-    }
+        function undoIgnore() {
+          if (undoStack.length === 0) return;
+          const ids = undoStack.pop();
+          ids.forEach(id => ignoredIds.delete(id));
+          redoStack.push(ids);
+          renderList();
+        }
 
-    function selectAll() {
-      const visibleNodes = lastResultsNodes.filter(n => !ignoredIds.has(n.id));
-      const ids = visibleNodes.map(n => n.id);
-      if (ids.length > 0) {
-        parent.postMessage({ pluginMessage: { type: 'select-nodes', nodeIds: ids } }, '*');
-      }
-    }
+        function redoIgnore() {
+          if (redoStack.length === 0) return;
+          const ids = redoStack.pop();
+          ids.forEach(id => ignoredIds.add(id));
+          undoStack.push(ids);
+          renderList();
+        }
 
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.onclick = () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        currentTab = tab.dataset.tab;
-        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-        document.getElementById(currentTab + '-panel').classList.add('active');
-        document.getElementById('styles-sub-tabs').style.display = currentTab === 'styles' ? 'flex' : 'none';
-      };
-    });
+        function selectAll() {
+          const nodes = resultSets[currentTab][currentCategory] || [];
+          const visibleNodes = nodes.filter(n => isNodeVisible(n));
+          const ids = visibleNodes.map(n => n.id);
+          if (ids.length > 0) {
+            parent.postMessage({ pluginMessage: { type: 'select-nodes', nodeIds: ids } }, '*');
+          }
+        }
 
-    document.querySelectorAll('.sub-tab').forEach(subTab => {
-      subTab.onclick = () => {
-        document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
-        subTab.classList.add('active');
-        currentSubTab = subTab.dataset.subtab;
-        resetResults('styles');
-      };
-    });
+        window.onclick = function (event) {
+          if (!event.target.closest('.filter-container')) {
+            document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('show'));
+          }
+        }
 
-    document.getElementById('run-styles').onclick = () => {
-      ignoredIds.clear();
-      undoStack = [];
-      redoStack = [];
-      setRunningState(true);
-      resetResults('styles');
-      parent.postMessage({ pluginMessage: { type: 'run-styles-check', subtab: currentSubTab } }, '*');
-    };
+        document.querySelectorAll('.tab').forEach(tab => {
+          tab.onclick = () => {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            currentTab = tab.dataset.tab;
+            currentCategory = currentTab === 'styles' ? 'unlinked' : 'unnamed';
+            activeTypes = new Set(['Frame', 'Shape', 'Text']);
+            activeScopes = new Set(['Fill', 'Stroke']);
+            syncFilterCheckboxes();
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.getElementById(currentTab + '-panel').classList.add('active');
+            document.getElementById('styles-sub-tabs').style.display = currentTab === 'styles' ? 'flex' : 'none';
 
-    document.getElementById('run-naming').onclick = () => {
-      ignoredIds.clear();
-      undoStack = [];
-      redoStack = [];
-      setRunningState(true);
-      resetResults('naming');
-      parent.postMessage({ pluginMessage: { type: 'run-naming-check' } }, '*');
-    };
+            if (currentTab === 'styles') {
+              document.getElementById('styles-filter-container').style.display = currentSubTab === 'color' ? 'block' : 'none';
+            }
 
-    onmessage = (event) => {
-      const msg = event.data.pluginMessage;
+            const prefix = currentTab === 'styles' ? 'style-card-' : 'naming-card-';
+            document.querySelectorAll('.result-card').forEach(card => card.classList.remove('active'));
+            const activeCard = document.getElementById(prefix + currentCategory);
+            if (activeCard) activeCard.classList.add('active');
+          };
+        });
 
-      // ALWAYS stop loading state on any incoming message
-      setRunningState(false);
+        document.querySelectorAll('.sub-tab').forEach(subTab => {
+          subTab.onclick = () => {
+            document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
+            subTab.classList.add('active');
+            currentSubTab = subTab.dataset.subtab;
+            currentCategory = 'unlinked';
 
-      if (msg.type === 'check-error') {
-        showError(msg.message);
-        return;
-      }
+            document.getElementById('styles-filter-container').style.display = currentSubTab === 'color' ? 'block' : 'none';
 
-      if (msg.type === 'empty-selection') {
-        resetResults(currentTab);
-        showError('Please select something on the canvas.');
-        return;
-      }
+            resetResults('styles');
+            document.querySelectorAll('.result-card').forEach(card => card.classList.remove('active'));
+            document.getElementById('style-card-unlinked').classList.add('active');
+          };
+        });
 
-      if (msg.type === 'naming-results') {
-        document.getElementById('naming-placeholder').classList.add('hidden');
-        document.getElementById('naming-results-content').classList.remove('hidden');
-        document.getElementById('naming-total').innerText = msg.total;
-        document.getElementById('naming-unnamed').innerText = msg.unnamed;
-        lastResultsNodes = msg.unnamedNodes;
-        renderList();
-      }
+        function syncFilterCheckboxes() {
+          // Master Fill checkbox is checked only if ALL children are selected
+          const allFillTypesActive = activeTypes.has('Frame') && activeTypes.has('Shape') && activeTypes.has('Text');
+          document.querySelectorAll('[id^="filter-fill"]').forEach(el => el.checked = allFillTypesActive);
 
-      if (msg.type === 'color-results' || msg.type === 'text-results') {
-        document.getElementById('styles-placeholder').classList.add('hidden');
-        document.getElementById('styles-results-content').classList.remove('hidden');
-        const total = msg.total || 0;
-        document.getElementById('style-remote-pct').innerText = total === 0 ? '0%' : Math.round((msg.remote / total) * 100) + '%';
-        document.getElementById('style-local-pct').innerText = total === 0 ? '0%' : Math.round((msg.local / total) * 100) + '%';
-        document.getElementById('style-unlinked-pct').innerText = total === 0 ? '0%' : Math.round((msg.unlinked / total) * 100) + '%';
+          document.querySelectorAll('[id^="filter-stroke"]').forEach(el => el.checked = activeScopes.has('Stroke'));
+          document.querySelectorAll('[id^="filter-frame"]').forEach(el => el.checked = activeTypes.has('Frame'));
+          document.querySelectorAll('[id^="filter-shape"]').forEach(el => el.checked = activeTypes.has('Shape'));
+          document.querySelectorAll('[id^="filter-text"]').forEach(el => el.checked = activeTypes.has('Text'));
+        }
 
-        document.getElementById('unlinked-title').innerText = currentSubTab === 'color' ? 'Unlinked Colors' : 'Unlinked Text Styles';
-        lastResultsNodes = msg.unlinkedNodes;
-        renderList();
-      }
-    };
-  </script>
+        document.getElementById('run-styles').onclick = () => {
+          ignoredIds.clear();
+          undoStack = [];
+          redoStack = [];
+          activeTypes = new Set(['Frame', 'Shape', 'Text']);
+          activeScopes = new Set(['Fill', 'Stroke']);
+          syncFilterCheckboxes();
+          setRunningState(true);
+          resetResults('styles');
+          parent.postMessage({ pluginMessage: { type: 'run-styles-check', subtab: currentSubTab } }, '*');
+        };
+
+        document.getElementById('run-naming').onclick = () => {
+          ignoredIds.clear();
+          undoStack = [];
+          redoStack = [];
+          activeTypes = new Set(['Frame', 'Shape', 'Text']);
+          activeScopes = new Set(['Fill', 'Stroke']);
+          syncFilterCheckboxes();
+          setRunningState(true);
+          resetResults('naming');
+          parent.postMessage({ pluginMessage: { type: 'run-naming-check' } }, '*');
+        };
+
+        onmessage = (event) => {
+          const msg = event.data.pluginMessage;
+
+          // ALWAYS stop loading state on any incoming message
+          setRunningState(false);
+
+          if (msg.type === 'check-error') {
+            showError(msg.message);
+            return;
+          }
+
+          if (msg.type === 'empty-selection') {
+            resetResults(currentTab);
+            showError('Please select something on the canvas.');
+            return;
+          }
+
+          if (msg.type === 'naming-results') {
+            document.getElementById('naming-placeholder').classList.add('hidden');
+            document.getElementById('naming-results-content').classList.remove('hidden');
+            document.getElementById('naming-total').innerText = msg.namedNodes.length; // Use named frames count
+            document.getElementById('naming-unnamed').innerText = msg.unnamed;
+
+            resultSets.naming.unnamed = msg.unnamedNodes;
+            resultSets.naming.named = msg.namedNodes;
+
+            updateCategory('unnamed');
+          }
+
+          if (msg.type === 'color-results' || msg.type === 'text-results') {
+            document.getElementById('styles-placeholder').classList.add('hidden');
+            document.getElementById('styles-results-content').classList.remove('hidden');
+            const total = msg.total || 0;
+            document.getElementById('style-remote-pct').innerText = total === 0 ? '0%' : Math.round((msg.remote / total) * 100) + '%';
+            document.getElementById('style-local-pct').innerText = total === 0 ? '0%' : Math.round((msg.local / total) * 100) + '%';
+            document.getElementById('style-unlinked-pct').innerText = total === 0 ? '0%' : Math.round((msg.unlinked / total) * 100) + '%';
+
+            resultSets.styles.unlinked = msg.unlinkedNodes;
+            resultSets.styles.remote = msg.remoteNodes;
+            resultSets.styles.local = msg.localNodes;
+
+            updateCategory('unlinked');
+          }
+        };
+      </script>
 </body>
 
 </html>
