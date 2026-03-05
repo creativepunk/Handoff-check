@@ -46,6 +46,55 @@ figma.ui.onmessage = async (msg) => {
       return;
     }
 
+    if (msg.type === 'save-api-key') {
+      await figma.clientStorage.setAsync('geminiApiKey', msg.key);
+      figma.ui.postMessage({ type: 'api-key-saved' });
+      return;
+    }
+
+    if (msg.type === 'load-api-key') {
+      const key = await figma.clientStorage.getAsync('geminiApiKey');
+      figma.ui.postMessage({ type: 'api-key-loaded', key: key || null });
+      return;
+    }
+
+    if (msg.type === 'clear-api-key') {
+      await figma.clientStorage.deleteAsync('geminiApiKey');
+      figma.ui.postMessage({ type: 'api-key-cleared' });
+      return;
+    }
+
+    if (msg.type === 'run-ux-copy-check') {
+      if (selection.length === 0) {
+        figma.ui.postMessage({ type: 'empty-selection' });
+        return;
+      }
+
+      type TextInfo = { id: string; name: string; content: string; };
+      const textItems: TextInfo[] = [];
+      const visited = new Set<string>();
+
+      const collect = (nodes: readonly SceneNode[]) => {
+        for (const n of nodes) {
+          if (visited.has(n.id)) continue;
+          visited.add(n.id);
+          if (n.type === 'TEXT') {
+            const content = n.characters.trim();
+            if (content.length > 0) {
+              textItems.push({ id: n.id, name: n.name, content });
+            }
+          }
+          if ('children' in n) try { collect((n as any).children); } catch (e) { }
+        }
+      };
+      collect(selection);
+
+      // Cap at 60 nodes to avoid token limits
+      const limited = textItems.slice(0, 60);
+      figma.ui.postMessage({ type: 'ux-copy-text-nodes', nodes: limited, totalFound: textItems.length });
+      return;
+    }
+
     if (selection.length === 0 && (msg.type === 'run-naming-check' || msg.type === 'run-styles-check')) {
       figma.ui.postMessage({ type: 'empty-selection' });
       return;

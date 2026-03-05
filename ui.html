@@ -506,6 +506,359 @@
       margin: 4px 8px;
     }
 
+    /* ── UX Copy Tab ──────────────────────────────────── */
+
+    /* Empty / setup state */
+    .ux-setup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 24px 20px;
+      gap: 16px;
+    }
+
+    .ux-setup-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(24, 160, 251, 0.12);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .ux-setup h2 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-color);
+    }
+
+    .ux-setup p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--secondary-text);
+      line-height: 1.6;
+    }
+
+    .ux-setup-steps {
+      width: 100%;
+      background: #2b2b2b;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .ux-setup-step {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 12px;
+      color: var(--secondary-text);
+      line-height: 1.5;
+    }
+
+    .ux-step-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(24, 160, 251, 0.15);
+      color: var(--accent-color);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .ux-setup-step a {
+      color: var(--accent-color);
+      text-decoration: none;
+    }
+
+    .ux-setup-step a:hover {
+      text-decoration: underline;
+    }
+
+    .ux-api-input-row {
+      display: flex;
+      width: 100%;
+      gap: 8px;
+    }
+
+    .ux-api-input {
+      flex: 1;
+      background: #2b2b2b;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: var(--text-color);
+      font-size: 12px;
+      padding: 8px 10px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .ux-api-input:focus {
+      border-color: var(--accent-color);
+    }
+
+    .ux-api-input::placeholder {
+      color: #555;
+    }
+
+    .ux-save-btn {
+      background: var(--accent-color);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .ux-save-btn:hover {
+      opacity: 0.85;
+    }
+
+    .ux-disclaimer {
+      font-size: 10px !important;
+      color: #555 !important;
+      margin-top: -8px !important;
+    }
+
+    /* Configured state */
+    .ux-key-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: rgba(24, 160, 251, 0.07);
+      border-radius: 6px;
+      margin-bottom: 12px;
+      font-size: 11px;
+    }
+
+    .ux-key-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--secondary-text);
+    }
+
+    .ux-key-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #3dc27f;
+      flex-shrink: 0;
+    }
+
+    .ux-change-key {
+      background: none;
+      border: none;
+      color: var(--accent-color);
+      font-size: 11px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    /* Result items */
+    .ux-result-item {
+      background: var(--list-item-bg);
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 6px;
+    }
+
+    .ux-result-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .ux-score-badge {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .ux-score-green {
+      background: rgba(61, 194, 127, 0.15);
+      color: #3dc27f;
+    }
+
+    .ux-score-amber {
+      background: rgba(240, 165, 0, 0.15);
+      color: #f0a500;
+    }
+
+    .ux-score-red {
+      background: rgba(232, 84, 84, 0.15);
+      color: #e85454;
+    }
+
+    .ux-result-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ux-result-layer {
+      font-size: 10px;
+      color: var(--secondary-text);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 2px;
+    }
+
+    .ux-result-text {
+      font-size: 12px;
+      color: var(--text-color);
+      margin-bottom: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .ux-result-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .ux-result-issues {
+      font-size: 10px;
+      color: #e85454;
+      flex: 1;
+    }
+
+    .ux-select-btn {
+      font-size: 10px;
+      background: none;
+      border: 1px solid var(--border-color);
+      color: var(--secondary-text);
+      border-radius: 4px;
+      padding: 2px 7px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .ux-select-btn:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    .ux-toggle-btn {
+      font-size: 10px;
+      background: none;
+      border: none;
+      color: var(--accent-color);
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .ux-suggestion-box {
+      display: none;
+      margin-top: 8px;
+      background: rgba(24, 160, 251, 0.06);
+      border-left: 2px solid var(--accent-color);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--text-color);
+      line-height: 1.5;
+    }
+
+    .ux-suggestion-box.open {
+      display: block;
+    }
+
+    .ux-suggestion-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+    }
+
+    /* Summary bar */
+    .ux-summary-bar {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0 14px;
+    }
+
+    .ux-summary-chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+    }
+
+    .ux-summary-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* Capped warning */
+    .ux-cap-warning {
+      font-size: 11px;
+      color: #f0a500;
+      background: rgba(240, 165, 0, 0.08);
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin-bottom: 10px;
+    }
+
+    /* Loading / error */
+    .ux-loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      gap: 12px;
+      color: var(--secondary-text);
+      font-size: 12px;
+    }
+
+    .ux-spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid #333;
+      border-top-color: var(--accent-color);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    .ux-error-bar {
+      background: var(--unlinked-bg);
+      border-left: 3px solid var(--unlinked-text);
+      border-radius: 4px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: var(--unlinked-text);
+      margin-bottom: 12px;
+    }
+
     .btn-select-all {
       margin-left: 24px;
       color: var(--accent-color);
@@ -615,6 +968,7 @@
   <div class="tabs">
     <div class="tab active" data-tab="styles">Styles & Variables</div>
     <div class="tab" data-tab="naming">Naming</div>
+    <div class="tab" data-tab="uxcopy">UX Copy</div>
   </div>
 
   <div id="styles-sub-tabs" class="sub-tabs">
@@ -742,270 +1096,348 @@
           <div id="unnamed-list" class="unlinked-list"></div>
         </div>
       </div>
+    </div> <!-- /naming-panel -->
 
-      <script>
-        let currentTab = 'styles';
-        let currentSubTab = 'color';
-        let currentCategory = 'unlinked';
-        let ignoredIds = new Set();
-        let undoStack = [];
-        let redoStack = [];
-        let resultSets = {
-          styles: { remote: [], local: [], unlinked: [] },
-          naming: { named: [], unnamed: [] }
+    <!-- UX Copy Panel -->
+    <div id="uxcopy-panel" class="panel">
+
+      <!-- Empty state: no API key -->
+      <div id="uxcopy-setup" class="ux-setup">
+        <div class="ux-setup-icon">✦</div>
+        <h2>Analyze UX Copy with AI</h2>
+        <p>Use Gemini to score UI text quality and get rewrite suggestions for every text layer in your selected
+          frames.</p>
+
+        <div class="ux-setup-steps">
+          <div class="ux-setup-step">
+            <span class="ux-step-num">1</span>
+            <span>Go to <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a>
+              and sign in with Google.</span>
+          </div>
+          <div class="ux-setup-step">
+            <span class="ux-step-num">2</span>
+            <span>Click <strong style="color: var(--text-color);">Get API Key</strong> → <strong
+                style="color: var(--text-color);">Create API Key</strong>. Copy it.</span>
+          </div>
+          <div class="ux-setup-step">
+            <span class="ux-step-num">3</span>
+            <span>Paste the key below and click <strong style="color: var(--text-color);">Save</strong>.</span>
+          </div>
+        </div>
+
+        <div class="ux-api-input-row">
+          <input id="ux-api-key-input" class="ux-api-input" type="password" placeholder="AIza…" />
+          <button class="ux-save-btn" onclick="saveApiKey()">Save</button>
+        </div>
+        <p class="ux-disclaimer">🔒 Your key is stored locally on this device and never shared.</p>
+      </div>
+
+      <!-- Configured state: key saved -->
+      <div id="uxcopy-ready" class="hidden">
+        <div class="ux-key-bar">
+          <div class="ux-key-bar-left">
+            <span class="ux-key-dot"></span>
+            <span>Gemini API key saved</span>
+          </div>
+          <button class="ux-change-key" onclick="changeApiKey()">Change key</button>
+        </div>
+
+        <button id="run-uxcopy" class="btn-run">
+          <div class="loader"></div>
+          <span>Run UX Copy Check</span>
+        </button>
+
+        <div id="uxcopy-placeholder" class="placeholder-message">Select frames and run check</div>
+
+        <!-- Loading -->
+        <div id="uxcopy-loading" class="hidden">
+          <div class="ux-loading">
+            <div class="ux-spinner"></div>
+            <span>Analyzing copy with Gemini…</span>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div id="uxcopy-error" class="hidden">
+          <div class="ux-error-bar" id="uxcopy-error-msg"></div>
+        </div>
+
+        <!-- Results -->
+        <div id="uxcopy-results" class="hidden">
+          <div id="uxcopy-cap-warning" class="ux-cap-warning hidden">
+            ⚠ Only the first 60 text layers were analyzed.
+          </div>
+          <div class="ux-summary-bar" id="uxcopy-summary"></div>
+          <div id="uxcopy-list"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+
+  <script>
+    let currentTab = 'styles';
+    let currentSubTab = 'color';
+    let currentCategory = 'unlinked';
+    let ignoredIds = new Set();
+    let undoStack = [];
+    let redoStack = [];
+    let resultSets = {
+      styles: { remote: [], local: [], unlinked: [] },
+      naming: { named: [], unnamed: [] }
+    };
+
+    let activeTypes = new Set(['Frame', 'Shape', 'Text']);
+    let activeScopes = new Set(['Fill', 'Stroke']);
+    let collapsedGroups = new Set();
+
+    function getNodeCategory(type) {
+      if (['FRAME', 'COMPONENT', 'INSTANCE', 'COMPONENT_SET', 'SECTION', 'GROUP'].indexOf(type) !== -1) return 'Frame';
+      if (type === 'TEXT') return 'Text';
+      return 'Shape';
+    }
+
+    function isNodeVisible(node) {
+      if (ignoredIds.has(node.id)) return false;
+
+      const mappedType = getNodeCategory(node.type);
+      const typeMatch = activeTypes.has(mappedType);
+
+      // Filter for Color subtab specifically
+      if (currentTab === 'styles' && currentSubTab === 'color') {
+        const hasScopeMatch = (node.colors || []).some(c => {
+          if (c.type === 'fill' && activeScopes.has('Fill')) return true;
+          if (c.type === 'stroke' && activeScopes.has('Stroke')) return true;
+          return false;
+        });
+        return typeMatch && hasScopeMatch;
+      }
+      return typeMatch;
+    }
+
+    function updateHistoryButtons() {
+      const undoBtn = document.getElementById(currentTab + '-undo');
+      const redoBtn = document.getElementById(currentTab + '-redo');
+      const selectAllBtn = document.getElementById(currentTab + '-select-all');
+      const ignoreAllBtn = document.getElementById(currentTab + '-ignore-all');
+
+      if (undoBtn) undoBtn.disabled = undoStack.length === 0;
+      if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+
+      const nodes = (resultSets[currentTab][currentCategory] || []).filter(n => isNodeVisible(n));
+      if (selectAllBtn) selectAllBtn.disabled = nodes.length === 0;
+      if (ignoreAllBtn) ignoreAllBtn.disabled = nodes.length === 0;
+    }
+
+    function toggleFilter() {
+      // Find the dropdown in the currently active panel
+      const panel = document.querySelector('.panel.active');
+      const dropdown = panel.querySelector('.filter-dropdown');
+
+      // Close any other open dropdowns first
+      document.querySelectorAll('.filter-dropdown').forEach(d => {
+        if (d !== dropdown) d.classList.remove('show');
+      });
+
+      dropdown.classList.toggle('show');
+    }
+
+    function toggleScope(scope, checked) {
+      if (checked) activeScopes.add(scope);
+      else activeScopes.delete(scope);
+
+      // Master Logic: If "Fill" is toggled, update all children to match
+      if (scope === 'Fill') {
+        ['Frame', 'Shape', 'Text'].forEach(type => {
+          if (checked) activeTypes.add(type);
+          else activeTypes.delete(type);
+        });
+      }
+
+      syncFilterCheckboxes();
+      renderList();
+    }
+
+    function toggleType(type, checked) {
+      if (checked) {
+        activeTypes.add(type);
+        activeScopes.add('Fill'); // Re-enable Fill scope if any child is checked
+      } else {
+        activeTypes.delete(type);
+        // Only disable Fill scope if ALL children are unchecked
+        const anyLeft = activeTypes.has('Frame') || activeTypes.has('Shape') || activeTypes.has('Text');
+        if (!anyLeft) activeScopes.delete('Fill');
+      }
+
+      syncFilterCheckboxes();
+      renderList();
+    }
+
+    function updateCategory(category) {
+      currentCategory = category;
+      const prefix = currentTab === 'styles' ? 'style-card-' : 'naming-card-';
+      document.querySelectorAll('.result-card').forEach(card => card.classList.remove('active'));
+      const activeCard = document.getElementById(prefix + category);
+      if (activeCard) activeCard.classList.add('active');
+
+      const titleEl = document.getElementById('unlinked-title');
+      if (titleEl) {
+        if (currentTab === 'styles') {
+          const catName = category.charAt(0).toUpperCase() + category.slice(1);
+          const subtabName = currentSubTab === 'color' ? 'Colors' : 'Text Styles';
+          titleEl.innerText = `${catName} ${subtabName}`;
+        } else {
+          titleEl.innerText = category === 'unnamed' ? 'Unnamed Frames' : 'Named Frames';
+        }
+      }
+      renderList();
+    }
+
+    function renderList() {
+      const listId = currentTab === 'styles' ? 'unlinked-list' : 'unnamed-list';
+      const badgeId = currentTab === 'styles' ? 'unlinked-count-badge' : 'unnamed-count-badge';
+      const list = document.getElementById(listId);
+      list.innerHTML = '';
+
+      const nodes = resultSets[currentTab][currentCategory] || [];
+      const visibleNodes = nodes.filter(n => isNodeVisible(n));
+      document.getElementById(badgeId).innerText = visibleNodes.length + ' found';
+
+      if (currentTab === 'styles' && currentSubTab === 'color') {
+        renderGroupedColorList(list, visibleNodes);
+      } else {
+        visibleNodes.forEach(node => {
+          const el = createListItem(node);
+          if (el) list.appendChild(el);
+        });
+      }
+      updateHistoryButtons();
+    }
+
+    function renderGroupedColorList(container, nodes) {
+      const groups = {};
+      nodes.forEach(node => {
+        const colorSet = new Set();
+        (node.colors || []).forEach(c => {
+          const key = c.hex === 'GRADIENT' ? 'GRADIENT' : (c.hex === 'MIXED' ? 'MIXED' : c.hex);
+          if (!groups[key]) groups[key] = { items: [], hex: key, label: c.style || key };
+          if (!colorSet.has(key)) {
+            groups[key].items.push(node);
+            colorSet.add(key);
+          }
+        });
+        if (!node.colors || node.colors.length === 0) {
+          if (!groups['NO_COLOR']) groups['NO_COLOR'] = { items: [], hex: 'transparent', label: 'No Color' };
+          groups['NO_COLOR'].items.push(node);
+        }
+      });
+
+      Object.values(groups).sort((a, b) => a.label.localeCompare(b.label)).forEach(group => {
+        const header = document.createElement('div');
+        header.className = 'color-group-header';
+        const info = document.createElement('div');
+        info.className = 'color-group-info';
+        if (group.hex !== 'GRADIENT' && group.hex !== 'MIXED') {
+          const swatch = document.createElement('div');
+          swatch.className = 'color-swatch';
+          swatch.style.backgroundColor = group.hex;
+          info.appendChild(swatch);
+        }
+        const label = document.createElement('span');
+        label.innerText = `${group.label} (${group.items.length})`;
+        info.appendChild(label);
+
+        const actions = document.createElement('div');
+        actions.className = 'group-actions';
+
+        const selectBtn = document.createElement('button');
+        selectBtn.className = 'btn-group-select';
+        selectBtn.innerText = 'Select All';
+        selectBtn.onclick = (e) => { e.stopPropagation(); selectGroup(group.items); };
+
+        const ignoreBtn = document.createElement('button');
+        ignoreBtn.className = 'btn-group-ignore';
+        ignoreBtn.innerText = 'Ignore All';
+        ignoreBtn.onclick = (e) => { e.stopPropagation(); ignoreBulk(group.items); };
+
+        actions.appendChild(selectBtn);
+        actions.appendChild(ignoreBtn);
+
+        header.appendChild(info);
+        header.appendChild(actions);
+
+        // Add chevron and click handler for accordion
+        const chevron = document.createElement('span');
+        chevron.className = 'chevron';
+        chevron.innerHTML = '▼';
+        info.prepend(chevron);
+
+        const isCollapsed = collapsedGroups.has(group.hex);
+        if (isCollapsed) header.classList.add('collapsed');
+
+        header.onclick = (e) => {
+          if (e.target.tagName === 'BUTTON') return;
+          toggleGroup(group.hex);
         };
 
-        let activeTypes = new Set(['Frame', 'Shape', 'Text']);
-        let activeScopes = new Set(['Fill', 'Stroke']);
-        let collapsedGroups = new Set();
+        const content = document.createElement('div');
+        content.className = 'accordion-content';
 
-        function getNodeCategory(type) {
-          if (['FRAME', 'COMPONENT', 'INSTANCE', 'COMPONENT_SET', 'SECTION', 'GROUP'].indexOf(type) !== -1) return 'Frame';
-          if (type === 'TEXT') return 'Text';
-          return 'Shape';
+        group.items.forEach(node => {
+          const el = createListItem(node);
+          if (el) content.appendChild(el);
+        });
+
+        container.appendChild(header);
+        container.appendChild(content);
+      });
+    }
+
+    function toggleGroup(groupId) {
+      if (collapsedGroups.has(groupId)) collapsedGroups.delete(groupId);
+      else collapsedGroups.add(groupId);
+      renderList();
+    }
+
+    function selectGroup(nodes) {
+      const ids = nodes.map(n => n.id);
+      parent.postMessage({ pluginMessage: { type: 'select-nodes', nodeIds: ids } }, '*');
+    }
+
+    function showError(msg) {
+      const el = document.getElementById('error-message');
+      el.innerText = msg;
+      el.classList.remove('hidden');
+      setTimeout(() => el.classList.add('hidden'), 5000);
+    }
+
+    function setRunningState(isRunning) {
+      const btns = document.querySelectorAll('.btn-run');
+      btns.forEach(btn => {
+        if (isRunning) {
+          btn.classList.add('loading');
+          btn.disabled = true;
+        } else {
+          btn.classList.remove('loading');
+          btn.disabled = false;
         }
+      });
+    }
 
-        function isNodeVisible(node) {
-          if (ignoredIds.has(node.id)) return false;
+    function resetResults(panelId) {
+      document.getElementById(panelId + '-placeholder').classList.remove('hidden');
+      document.getElementById(panelId + '-results-content').classList.add('hidden');
+      if (panelId === 'styles') {
+        document.getElementById('unlinked-list').innerHTML = '';
+      } else {
+        document.getElementById('unnamed-list').innerHTML = '';
+      }
+    }
 
-          const mappedType = getNodeCategory(node.type);
-          const typeMatch = activeTypes.has(mappedType);
-
-          // Filter for Color subtab specifically
-          if (currentTab === 'styles' && currentSubTab === 'color') {
-            const hasScopeMatch = (node.colors || []).some(c => {
-              if (c.type === 'fill' && activeScopes.has('Fill')) return true;
-              if (c.type === 'stroke' && activeScopes.has('Stroke')) return true;
-              return false;
-            });
-            return typeMatch && hasScopeMatch;
-          }
-          return typeMatch;
-        }
-
-        function updateHistoryButtons() {
-          const undoBtn = document.getElementById(currentTab + '-undo');
-          const redoBtn = document.getElementById(currentTab + '-redo');
-          const selectAllBtn = document.getElementById(currentTab + '-select-all');
-          const ignoreAllBtn = document.getElementById(currentTab + '-ignore-all');
-
-          if (undoBtn) undoBtn.disabled = undoStack.length === 0;
-          if (redoBtn) redoBtn.disabled = redoStack.length === 0;
-
-          const nodes = (resultSets[currentTab][currentCategory] || []).filter(n => isNodeVisible(n));
-          if (selectAllBtn) selectAllBtn.disabled = nodes.length === 0;
-          if (ignoreAllBtn) ignoreAllBtn.disabled = nodes.length === 0;
-        }
-
-        function toggleFilter() {
-          // Find the dropdown in the currently active panel
-          const panel = document.querySelector('.panel.active');
-          const dropdown = panel.querySelector('.filter-dropdown');
-
-          // Close any other open dropdowns first
-          document.querySelectorAll('.filter-dropdown').forEach(d => {
-            if (d !== dropdown) d.classList.remove('show');
-          });
-
-          dropdown.classList.toggle('show');
-        }
-
-        function toggleScope(scope, checked) {
-          if (checked) activeScopes.add(scope);
-          else activeScopes.delete(scope);
-
-          // Master Logic: If "Fill" is toggled, update all children to match
-          if (scope === 'Fill') {
-            ['Frame', 'Shape', 'Text'].forEach(type => {
-              if (checked) activeTypes.add(type);
-              else activeTypes.delete(type);
-            });
-          }
-
-          syncFilterCheckboxes();
-          renderList();
-        }
-
-        function toggleType(type, checked) {
-          if (checked) {
-            activeTypes.add(type);
-            activeScopes.add('Fill'); // Re-enable Fill scope if any child is checked
-          } else {
-            activeTypes.delete(type);
-            // Only disable Fill scope if ALL children are unchecked
-            const anyLeft = activeTypes.has('Frame') || activeTypes.has('Shape') || activeTypes.has('Text');
-            if (!anyLeft) activeScopes.delete('Fill');
-          }
-
-          syncFilterCheckboxes();
-          renderList();
-        }
-
-        function updateCategory(category) {
-          currentCategory = category;
-          const prefix = currentTab === 'styles' ? 'style-card-' : 'naming-card-';
-          document.querySelectorAll('.result-card').forEach(card => card.classList.remove('active'));
-          const activeCard = document.getElementById(prefix + category);
-          if (activeCard) activeCard.classList.add('active');
-
-          const titleEl = document.getElementById('unlinked-title');
-          if (titleEl) {
-            if (currentTab === 'styles') {
-              const catName = category.charAt(0).toUpperCase() + category.slice(1);
-              const subtabName = currentSubTab === 'color' ? 'Colors' : 'Text Styles';
-              titleEl.innerText = `${catName} ${subtabName}`;
-            } else {
-              titleEl.innerText = category === 'unnamed' ? 'Unnamed Frames' : 'Named Frames';
-            }
-          }
-          renderList();
-        }
-
-        function renderList() {
-          const listId = currentTab === 'styles' ? 'unlinked-list' : 'unnamed-list';
-          const badgeId = currentTab === 'styles' ? 'unlinked-count-badge' : 'unnamed-count-badge';
-          const list = document.getElementById(listId);
-          list.innerHTML = '';
-
-          const nodes = resultSets[currentTab][currentCategory] || [];
-          const visibleNodes = nodes.filter(n => isNodeVisible(n));
-          document.getElementById(badgeId).innerText = visibleNodes.length + ' found';
-
-          if (currentTab === 'styles' && currentSubTab === 'color') {
-            renderGroupedColorList(list, visibleNodes);
-          } else {
-            visibleNodes.forEach(node => {
-              const el = createListItem(node);
-              if (el) list.appendChild(el);
-            });
-          }
-          updateHistoryButtons();
-        }
-
-        function renderGroupedColorList(container, nodes) {
-          const groups = {};
-          nodes.forEach(node => {
-            const colorSet = new Set();
-            (node.colors || []).forEach(c => {
-              const key = c.hex === 'GRADIENT' ? 'GRADIENT' : (c.hex === 'MIXED' ? 'MIXED' : c.hex);
-              if (!groups[key]) groups[key] = { items: [], hex: key, label: c.style || key };
-              if (!colorSet.has(key)) {
-                groups[key].items.push(node);
-                colorSet.add(key);
-              }
-            });
-            if (!node.colors || node.colors.length === 0) {
-              if (!groups['NO_COLOR']) groups['NO_COLOR'] = { items: [], hex: 'transparent', label: 'No Color' };
-              groups['NO_COLOR'].items.push(node);
-            }
-          });
-
-          Object.values(groups).sort((a, b) => a.label.localeCompare(b.label)).forEach(group => {
-            const header = document.createElement('div');
-            header.className = 'color-group-header';
-            const info = document.createElement('div');
-            info.className = 'color-group-info';
-            if (group.hex !== 'GRADIENT' && group.hex !== 'MIXED') {
-              const swatch = document.createElement('div');
-              swatch.className = 'color-swatch';
-              swatch.style.backgroundColor = group.hex;
-              info.appendChild(swatch);
-            }
-            const label = document.createElement('span');
-            label.innerText = `${group.label} (${group.items.length})`;
-            info.appendChild(label);
-
-            const actions = document.createElement('div');
-            actions.className = 'group-actions';
-
-            const selectBtn = document.createElement('button');
-            selectBtn.className = 'btn-group-select';
-            selectBtn.innerText = 'Select All';
-            selectBtn.onclick = (e) => { e.stopPropagation(); selectGroup(group.items); };
-
-            const ignoreBtn = document.createElement('button');
-            ignoreBtn.className = 'btn-group-ignore';
-            ignoreBtn.innerText = 'Ignore All';
-            ignoreBtn.onclick = (e) => { e.stopPropagation(); ignoreBulk(group.items); };
-
-            actions.appendChild(selectBtn);
-            actions.appendChild(ignoreBtn);
-
-            header.appendChild(info);
-            header.appendChild(actions);
-
-            // Add chevron and click handler for accordion
-            const chevron = document.createElement('span');
-            chevron.className = 'chevron';
-            chevron.innerHTML = '▼';
-            info.prepend(chevron);
-
-            const isCollapsed = collapsedGroups.has(group.hex);
-            if (isCollapsed) header.classList.add('collapsed');
-
-            header.onclick = (e) => {
-              if (e.target.tagName === 'BUTTON') return;
-              toggleGroup(group.hex);
-            };
-
-            const content = document.createElement('div');
-            content.className = 'accordion-content';
-
-            group.items.forEach(node => {
-              const el = createListItem(node);
-              if (el) content.appendChild(el);
-            });
-
-            container.appendChild(header);
-            container.appendChild(content);
-          });
-        }
-
-        function toggleGroup(groupId) {
-          if (collapsedGroups.has(groupId)) collapsedGroups.delete(groupId);
-          else collapsedGroups.add(groupId);
-          renderList();
-        }
-
-        function selectGroup(nodes) {
-          const ids = nodes.map(n => n.id);
-          parent.postMessage({ pluginMessage: { type: 'select-nodes', nodeIds: ids } }, '*');
-        }
-
-        function showError(msg) {
-          const el = document.getElementById('error-message');
-          el.innerText = msg;
-          el.classList.remove('hidden');
-          setTimeout(() => el.classList.add('hidden'), 5000);
-        }
-
-        function setRunningState(isRunning) {
-          const btns = document.querySelectorAll('.btn-run');
-          btns.forEach(btn => {
-            if (isRunning) {
-              btn.classList.add('loading');
-              btn.disabled = true;
-            } else {
-              btn.classList.remove('loading');
-              btn.disabled = false;
-            }
-          });
-        }
-
-        function resetResults(panelId) {
-          document.getElementById(panelId + '-placeholder').classList.remove('hidden');
-          document.getElementById(panelId + '-results-content').classList.add('hidden');
-          if (panelId === 'styles') {
-            document.getElementById('unlinked-list').innerHTML = '';
-          } else {
-            document.getElementById('unnamed-list').innerHTML = '';
-          }
-        }
-
-        function createListItem(node) {
-          const item = document.createElement('div');
-          item.className = 'unlinked-item';
-          item.innerHTML = `
+    function createListItem(node) {
+      const item = document.createElement('div');
+      item.className = 'unlinked-item';
+      item.innerHTML = `
         <div class="unlinked-info">
           <div class="node-name" title="${node.name}">${node.name || 'Unnamed Layer'}</div>
         </div>
@@ -1014,187 +1446,409 @@
           <button class="action-btn" onclick="ignoreNode('${node.id}', this)">Ignore</button>
         </div>
       `;
-          return item;
+      return item;
+    }
+
+    function selectNode(id, btn) {
+      document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('focused'));
+      if (btn) btn.classList.add('focused');
+      parent.postMessage({ pluginMessage: { type: 'select-node', nodeId: id } }, '*');
+    }
+
+    function ignoreNode(id, btn) {
+      ignoredIds.add(id);
+      undoStack.push([id]); // Push as array for bulk undo support
+      redoStack = [];
+      renderList();
+    }
+
+    function ignoreBulk(nodes) {
+      const ids = nodes.map(n => n.id);
+      if (ids.length === 0) return;
+      ids.forEach(id => ignoredIds.add(id));
+      undoStack.push(ids);
+      redoStack = [];
+      renderList();
+    }
+
+    function ignoreAll() {
+      const nodes = resultSets[currentTab][currentCategory] || [];
+      const visibleNodes = nodes.filter(n => isNodeVisible(n));
+      ignoreBulk(visibleNodes);
+    }
+
+    function undoIgnore() {
+      if (undoStack.length === 0) return;
+      const ids = undoStack.pop();
+      ids.forEach(id => ignoredIds.delete(id));
+      redoStack.push(ids);
+      renderList();
+    }
+
+    function redoIgnore() {
+      if (redoStack.length === 0) return;
+      const ids = redoStack.pop();
+      ids.forEach(id => ignoredIds.add(id));
+      undoStack.push(ids);
+      renderList();
+    }
+
+    function selectAll() {
+      const nodes = resultSets[currentTab][currentCategory] || [];
+      const visibleNodes = nodes.filter(n => isNodeVisible(n));
+      const ids = visibleNodes.map(n => n.id);
+      if (ids.length > 0) {
+        parent.postMessage({ pluginMessage: { type: 'select-nodes', nodeIds: ids } }, '*');
+      }
+    }
+
+    window.onclick = function (event) {
+      if (!event.target.closest('.filter-container')) {
+        document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('show'));
+      }
+    }
+
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.onclick = () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentTab = tab.dataset.tab;
+        currentCategory = currentTab === 'styles' ? 'unlinked' : 'unnamed';
+        activeTypes = new Set(['Frame', 'Shape', 'Text']);
+        activeScopes = new Set(['Fill', 'Stroke']);
+        syncFilterCheckboxes();
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.getElementById(currentTab + '-panel').classList.add('active');
+        document.getElementById('styles-sub-tabs').style.display = currentTab === 'styles' ? 'flex' : 'none';
+
+        if (currentTab === 'styles') {
+          document.getElementById('styles-filter-container').style.display = currentSubTab === 'color' ? 'block' : 'none';
         }
 
-        function selectNode(id, btn) {
-          document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('focused'));
-          if (btn) btn.classList.add('focused');
-          parent.postMessage({ pluginMessage: { type: 'select-node', nodeId: id } }, '*');
-        }
+        const prefix = currentTab === 'styles' ? 'style-card-' : 'naming-card-';
+        document.querySelectorAll('.result-card').forEach(card => card.classList.remove('active'));
+        const activeCard = document.getElementById(prefix + currentCategory);
+        if (activeCard) activeCard.classList.add('active');
+      };
+    });
 
-        function ignoreNode(id, btn) {
-          ignoredIds.add(id);
-          undoStack.push([id]); // Push as array for bulk undo support
-          redoStack = [];
-          renderList();
-        }
+    document.querySelectorAll('.sub-tab').forEach(subTab => {
+      subTab.onclick = () => {
+        document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
+        subTab.classList.add('active');
+        currentSubTab = subTab.dataset.subtab;
+        currentCategory = 'unlinked';
 
-        function ignoreBulk(nodes) {
-          const ids = nodes.map(n => n.id);
-          if (ids.length === 0) return;
-          ids.forEach(id => ignoredIds.add(id));
-          undoStack.push(ids);
-          redoStack = [];
-          renderList();
-        }
+        document.getElementById('styles-filter-container').style.display = currentSubTab === 'color' ? 'block' : 'none';
 
-        function ignoreAll() {
-          const nodes = resultSets[currentTab][currentCategory] || [];
-          const visibleNodes = nodes.filter(n => isNodeVisible(n));
-          ignoreBulk(visibleNodes);
-        }
+        resetResults('styles');
+        document.querySelectorAll('.result-card').forEach(card => card.classList.remove('active'));
+        document.getElementById('style-card-unlinked').classList.add('active');
+      };
+    });
 
-        function undoIgnore() {
-          if (undoStack.length === 0) return;
-          const ids = undoStack.pop();
-          ids.forEach(id => ignoredIds.delete(id));
-          redoStack.push(ids);
-          renderList();
-        }
+    function syncFilterCheckboxes() {
+      // Master Fill checkbox is checked only if ALL children are selected
+      const allFillTypesActive = activeTypes.has('Frame') && activeTypes.has('Shape') && activeTypes.has('Text');
+      document.querySelectorAll('[id^="filter-fill"]').forEach(el => el.checked = allFillTypesActive);
 
-        function redoIgnore() {
-          if (redoStack.length === 0) return;
-          const ids = redoStack.pop();
-          ids.forEach(id => ignoredIds.add(id));
-          undoStack.push(ids);
-          renderList();
-        }
+      document.querySelectorAll('[id^="filter-stroke"]').forEach(el => el.checked = activeScopes.has('Stroke'));
+      document.querySelectorAll('[id^="filter-frame"]').forEach(el => el.checked = activeTypes.has('Frame'));
+      document.querySelectorAll('[id^="filter-shape"]').forEach(el => el.checked = activeTypes.has('Shape'));
+      document.querySelectorAll('[id^="filter-text"]').forEach(el => el.checked = activeTypes.has('Text'));
+    }
 
-        function selectAll() {
-          const nodes = resultSets[currentTab][currentCategory] || [];
-          const visibleNodes = nodes.filter(n => isNodeVisible(n));
-          const ids = visibleNodes.map(n => n.id);
-          if (ids.length > 0) {
-            parent.postMessage({ pluginMessage: { type: 'select-nodes', nodeIds: ids } }, '*');
+    document.getElementById('run-styles').onclick = () => {
+      ignoredIds.clear();
+      undoStack = [];
+      redoStack = [];
+      activeTypes = new Set(['Frame', 'Shape', 'Text']);
+      activeScopes = new Set(['Fill', 'Stroke']);
+      syncFilterCheckboxes();
+      setRunningState(true);
+      resetResults('styles');
+      parent.postMessage({ pluginMessage: { type: 'run-styles-check', subtab: currentSubTab } }, '*');
+    };
+
+    document.getElementById('run-naming').onclick = () => {
+      ignoredIds.clear();
+      undoStack = [];
+      redoStack = [];
+      activeTypes = new Set(['Frame', 'Shape', 'Text']);
+      activeScopes = new Set(['Fill', 'Stroke']);
+      syncFilterCheckboxes();
+      setRunningState(true);
+      resetResults('naming');
+      parent.postMessage({ pluginMessage: { type: 'run-naming-check' } }, '*');
+    };
+
+    onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+
+      // ALWAYS stop loading state on any incoming message
+      setRunningState(false);
+
+      if (msg.type === 'check-error') {
+        showError(msg.message);
+        return;
+      }
+
+      if (msg.type === 'empty-selection') {
+        resetResults(currentTab);
+        showError('Please select something on the canvas.');
+        return;
+      }
+
+      if (msg.type === 'naming-results') {
+        document.getElementById('naming-placeholder').classList.add('hidden');
+        document.getElementById('naming-results-content').classList.remove('hidden');
+        document.getElementById('naming-total').innerText = msg.namedNodes.length; // Use named frames count
+        document.getElementById('naming-unnamed').innerText = msg.unnamed;
+
+        resultSets.naming.unnamed = msg.unnamedNodes;
+        resultSets.naming.named = msg.namedNodes;
+
+        updateCategory('unnamed');
+      }
+
+      if (msg.type === 'color-results' || msg.type === 'text-results') {
+        document.getElementById('styles-placeholder').classList.add('hidden');
+        document.getElementById('styles-results-content').classList.remove('hidden');
+        const total = msg.total || 0;
+        document.getElementById('style-remote-pct').innerText = total === 0 ? '0%' : Math.round((msg.remote / total) * 100) + '%';
+        document.getElementById('style-local-pct').innerText = total === 0 ? '0%' : Math.round((msg.local / total) * 100) + '%';
+        document.getElementById('style-unlinked-pct').innerText = total === 0 ? '0%' : Math.round((msg.unlinked / total) * 100) + '%';
+
+        resultSets.styles.unlinked = msg.unlinkedNodes;
+        resultSets.styles.remote = msg.remoteNodes;
+        resultSets.styles.local = msg.localNodes;
+
+        updateCategory('unlinked');
+      }
+
+      // ── UX Copy handlers ─────────────────────────────
+      if (msg.type === 'api-key-saved') {
+        showUxReady();
+      }
+
+      if (msg.type === 'api-key-loaded') {
+        if (msg.key) {
+          uxApiKey = msg.key;
+          showUxReady();
+        } else {
+          showUxSetup();
+        }
+      }
+
+      if (msg.type === 'api-key-cleared') {
+        showUxSetup();
+      }
+
+      if (msg.type === 'ux-copy-text-nodes') {
+        if (msg.totalFound === 0) {
+          uxShowError('No text layers found in the selected frames.');
+          return;
+        }
+        if (msg.totalFound > 60) {
+          document.getElementById('uxcopy-cap-warning').classList.remove('hidden');
+        } else {
+          document.getElementById('uxcopy-cap-warning').classList.add('hidden');
+        }
+        callGemini(msg.nodes);
+      }
+    };
+
+    // ── UX Copy functions ──────────────────────────────
+
+    let uxApiKey = null;
+
+    function showUxSetup() {
+      document.getElementById('uxcopy-setup').classList.remove('hidden');
+      document.getElementById('uxcopy-ready').classList.add('hidden');
+    }
+
+    function showUxReady() {
+      document.getElementById('uxcopy-setup').classList.add('hidden');
+      document.getElementById('uxcopy-ready').classList.remove('hidden');
+    }
+
+    function saveApiKey() {
+      const key = document.getElementById('ux-api-key-input').value.trim();
+      if (!key) return;
+      uxApiKey = key;
+      parent.postMessage({ pluginMessage: { type: 'save-api-key', key } }, '*');
+    }
+
+    function changeApiKey() {
+      uxApiKey = null;
+      document.getElementById('ux-api-key-input').value = '';
+      parent.postMessage({ pluginMessage: { type: 'clear-api-key' } }, '*');
+    }
+
+    function uxShowError(msg) {
+      document.getElementById('uxcopy-loading').classList.add('hidden');
+      document.getElementById('uxcopy-results').classList.add('hidden');
+      document.getElementById('uxcopy-placeholder').classList.add('hidden');
+      document.getElementById('uxcopy-error-msg').innerText = msg;
+      document.getElementById('uxcopy-error').classList.remove('hidden');
+    }
+
+    function uxShowLoading() {
+      document.getElementById('uxcopy-placeholder').classList.add('hidden');
+      document.getElementById('uxcopy-error').classList.add('hidden');
+      document.getElementById('uxcopy-results').classList.add('hidden');
+      document.getElementById('uxcopy-loading').classList.remove('hidden');
+    }
+
+    async function callGemini(nodes) {
+      uxShowLoading();
+      const nodeList = nodes.map((n, i) =>
+        `${i + 1}. Layer: "${n.name}" | Text: ${JSON.stringify(n.content)}`
+      ).join('\n');
+
+      const prompt = `You are an expert UX writer reviewing UI text elements. For each item below, evaluate the copy and respond ONLY with a valid JSON array (no markdown, no explanation).
+
+Each element in the array must have exactly these keys:
+- "score": integer 1-10 (1=very poor, 10=excellent)
+- "issues": string (comma-separated issues, or "None" if score >= 8)
+- "suggestion": string (one improved rewrite, or "Looks good!" if score >= 8)
+
+Text elements to review:
+${nodeList}
+
+Rules:
+- Be concise in issues and suggestions
+- Focus on clarity, action-orientation, tone, and brevity
+- Return exactly ${nodes.length} objects in the array, in the same order`;
+
+      try {
+        const res = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${uxApiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: { temperature: 0.3, maxOutputTokens: 4096 }
+            })
           }
+        );
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          const errMsg = errData?.error?.message || `API error ${res.status}`;
+
+          if (res.status === 429 && errMsg.includes('limit: 0')) {
+            uxShowError('Quota exceeded (limit: 0). Your API key lacks free tier access, likely due to your region (e.g., EU/UK) or requiring a billing account in Google Cloud.');
+          } else if (res.status === 400 || res.status === 401 || res.status === 403) {
+            uxShowError('Invalid API key. Please check your key and try again.');
+          } else {
+            uxShowError('Gemini error: ' + errMsg);
+          }
+          return;
         }
 
-        window.onclick = function (event) {
-          if (!event.target.closest('.filter-container')) {
-            document.querySelectorAll('.filter-dropdown').forEach(d => d.classList.remove('show'));
-          }
+        const data = await res.json();
+        const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+        // Strip markdown code fences if Gemini wraps in ```json
+        const cleaned = rawText.replace(/^```(?:json)?\s*/i, '').replace(/\s*```\s*$/, '').trim();
+        let results;
+        try {
+          results = JSON.parse(cleaned);
+        } catch (e) {
+          uxShowError('Could not parse Gemini response. Please try again.');
+          return;
         }
 
-        document.querySelectorAll('.tab').forEach(tab => {
-          tab.onclick = () => {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            currentTab = tab.dataset.tab;
-            currentCategory = currentTab === 'styles' ? 'unlinked' : 'unnamed';
-            activeTypes = new Set(['Frame', 'Shape', 'Text']);
-            activeScopes = new Set(['Fill', 'Stroke']);
-            syncFilterCheckboxes();
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            document.getElementById(currentTab + '-panel').classList.add('active');
-            document.getElementById('styles-sub-tabs').style.display = currentTab === 'styles' ? 'flex' : 'none';
+        renderUxResults(nodes, results);
+      } catch (e) {
+        uxShowError('Network error: ' + e.message);
+      }
+    }
 
-            if (currentTab === 'styles') {
-              document.getElementById('styles-filter-container').style.display = currentSubTab === 'color' ? 'block' : 'none';
-            }
+    function renderUxResults(nodes, results) {
+      document.getElementById('uxcopy-loading').classList.add('hidden');
+      document.getElementById('uxcopy-results').classList.remove('hidden');
 
-            const prefix = currentTab === 'styles' ? 'style-card-' : 'naming-card-';
-            document.querySelectorAll('.result-card').forEach(card => card.classList.remove('active'));
-            const activeCard = document.getElementById(prefix + currentCategory);
-            if (activeCard) activeCard.classList.add('active');
-          };
-        });
+      let green = 0, amber = 0, red = 0;
+      const list = document.getElementById('uxcopy-list');
+      list.innerHTML = '';
 
-        document.querySelectorAll('.sub-tab').forEach(subTab => {
-          subTab.onclick = () => {
-            document.querySelectorAll('.sub-tab').forEach(st => st.classList.remove('active'));
-            subTab.classList.add('active');
-            currentSubTab = subTab.dataset.subtab;
-            currentCategory = 'unlinked';
+      nodes.forEach((node, i) => {
+        const r = results[i] || { score: 0, issues: 'No data', suggestion: '' };
+        const score = Math.max(1, Math.min(10, parseInt(r.score) || 0));
+        let badgeClass = 'ux-score-red';
+        if (score >= 8) { badgeClass = 'ux-score-green'; green++; }
+        else if (score >= 5) { badgeClass = 'ux-score-amber'; amber++; }
+        else { red++; }
 
-            document.getElementById('styles-filter-container').style.display = currentSubTab === 'color' ? 'block' : 'none';
+        const hasIssues = r.issues && r.issues.toLowerCase() !== 'none';
+        const hasSuggestion = r.suggestion && r.suggestion.toLowerCase() !== 'looks good!';
 
-            resetResults('styles');
-            document.querySelectorAll('.result-card').forEach(card => card.classList.remove('active'));
-            document.getElementById('style-card-unlinked').classList.add('active');
-          };
-        });
+        const item = document.createElement('div');
+        item.className = 'ux-result-item';
+        item.innerHTML = `
+            <div class="ux-result-header">
+              <div class="ux-score-badge ${badgeClass}">${score}</div>
+              <div class="ux-result-body">
+                <div class="ux-result-layer">${escapeHtml(node.name)}</div>
+                <div class="ux-result-text" title="${escapeHtml(node.content)}">${escapeHtml(node.content)}</div>
+                <div class="ux-result-actions">
+                  ${hasIssues ? `<span class="ux-result-issues">${escapeHtml(r.issues)}</span>` : ''}
+                  ${hasSuggestion ? `<button class="ux-toggle-btn" onclick="toggleSuggestion(this)">Show suggestion ▾</button>` : ''}
+                  <button class="ux-select-btn" onclick="selectNode('${node.id}')">Select</button>
+                </div>
+              </div>
+            </div>
+            ${hasSuggestion ? `
+            <div class="ux-suggestion-box">
+              <div class="ux-suggestion-label">✦ Suggested rewrite</div>
+              ${escapeHtml(r.suggestion)}
+            </div>` : ''}
+          `;
+        list.appendChild(item);
+      });
 
-        function syncFilterCheckboxes() {
-          // Master Fill checkbox is checked only if ALL children are selected
-          const allFillTypesActive = activeTypes.has('Frame') && activeTypes.has('Shape') && activeTypes.has('Text');
-          document.querySelectorAll('[id^="filter-fill"]').forEach(el => el.checked = allFillTypesActive);
+      // Summary bar
+      const summary = document.getElementById('uxcopy-summary');
+      summary.innerHTML = `
+          <span class="ux-summary-chip"><span class="ux-summary-dot" style="background:#3dc27f"></span> ${green} Good (8–10)</span>
+          <span class="ux-summary-chip"><span class="ux-summary-dot" style="background:#f0a500"></span> ${amber} Fair (5–7)</span>
+          <span class="ux-summary-chip"><span class="ux-summary-dot" style="background:#e85454"></span> ${red} Poor (1–4)</span>
+        `;
+    }
 
-          document.querySelectorAll('[id^="filter-stroke"]').forEach(el => el.checked = activeScopes.has('Stroke'));
-          document.querySelectorAll('[id^="filter-frame"]').forEach(el => el.checked = activeTypes.has('Frame'));
-          document.querySelectorAll('[id^="filter-shape"]').forEach(el => el.checked = activeTypes.has('Shape'));
-          document.querySelectorAll('[id^="filter-text"]').forEach(el => el.checked = activeTypes.has('Text'));
-        }
+    function toggleSuggestion(btn) {
+      const box = btn.closest('.ux-result-item').querySelector('.ux-suggestion-box');
+      const isOpen = box.classList.toggle('open');
+      btn.textContent = isOpen ? 'Hide suggestion ▴' : 'Show suggestion ▾';
+    }
 
-        document.getElementById('run-styles').onclick = () => {
-          ignoredIds.clear();
-          undoStack = [];
-          redoStack = [];
-          activeTypes = new Set(['Frame', 'Shape', 'Text']);
-          activeScopes = new Set(['Fill', 'Stroke']);
-          syncFilterCheckboxes();
-          setRunningState(true);
-          resetResults('styles');
-          parent.postMessage({ pluginMessage: { type: 'run-styles-check', subtab: currentSubTab } }, '*');
-        };
+    function selectNode(nodeId) {
+      parent.postMessage({ pluginMessage: { type: 'select-node', nodeId } }, '*');
+    }
 
-        document.getElementById('run-naming').onclick = () => {
-          ignoredIds.clear();
-          undoStack = [];
-          redoStack = [];
-          activeTypes = new Set(['Frame', 'Shape', 'Text']);
-          activeScopes = new Set(['Fill', 'Stroke']);
-          syncFilterCheckboxes();
-          setRunningState(true);
-          resetResults('naming');
-          parent.postMessage({ pluginMessage: { type: 'run-naming-check' } }, '*');
-        };
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
 
-        onmessage = (event) => {
-          const msg = event.data.pluginMessage;
+    // Wire up run button
+    document.getElementById('run-uxcopy').onclick = () => {
+      document.getElementById('uxcopy-loading').classList.add('hidden');
+      document.getElementById('uxcopy-error').classList.add('hidden');
+      document.getElementById('uxcopy-results').classList.add('hidden');
+      parent.postMessage({ pluginMessage: { type: 'run-ux-copy-check' } }, '*');
+    };
 
-          // ALWAYS stop loading state on any incoming message
-          setRunningState(false);
+    // On load, request API key from storage
+    parent.postMessage({ pluginMessage: { type: 'load-api-key' } }, '*');
 
-          if (msg.type === 'check-error') {
-            showError(msg.message);
-            return;
-          }
-
-          if (msg.type === 'empty-selection') {
-            resetResults(currentTab);
-            showError('Please select something on the canvas.');
-            return;
-          }
-
-          if (msg.type === 'naming-results') {
-            document.getElementById('naming-placeholder').classList.add('hidden');
-            document.getElementById('naming-results-content').classList.remove('hidden');
-            document.getElementById('naming-total').innerText = msg.namedNodes.length; // Use named frames count
-            document.getElementById('naming-unnamed').innerText = msg.unnamed;
-
-            resultSets.naming.unnamed = msg.unnamedNodes;
-            resultSets.naming.named = msg.namedNodes;
-
-            updateCategory('unnamed');
-          }
-
-          if (msg.type === 'color-results' || msg.type === 'text-results') {
-            document.getElementById('styles-placeholder').classList.add('hidden');
-            document.getElementById('styles-results-content').classList.remove('hidden');
-            const total = msg.total || 0;
-            document.getElementById('style-remote-pct').innerText = total === 0 ? '0%' : Math.round((msg.remote / total) * 100) + '%';
-            document.getElementById('style-local-pct').innerText = total === 0 ? '0%' : Math.round((msg.local / total) * 100) + '%';
-            document.getElementById('style-unlinked-pct').innerText = total === 0 ? '0%' : Math.round((msg.unlinked / total) * 100) + '%';
-
-            resultSets.styles.unlinked = msg.unlinkedNodes;
-            resultSets.styles.remote = msg.remoteNodes;
-            resultSets.styles.local = msg.localNodes;
-
-            updateCategory('unlinked');
-          }
-        };
-      </script>
+  </script>
 </body>
 
 </html>
